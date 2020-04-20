@@ -1,5 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/mast.Master" AutoEventWireup="true" CodeBehind="RegistroRegaloAPAD.aspx.cs" Inherits="Familias3._1.Apadrinamiento.RegistroRegaloAPAD" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <style>
+        .i50{
+            margin-left:50px;
+        }
+    </style>
 <table class="tableCont" style="margin: 0 auto;" runat="server" id="tbfiltros">
         <tr>
             <th>
@@ -70,7 +75,7 @@
                 </td>
             </tr>
         </table>
-        <asp:GridView ID="gvhistorial" runat="server" CssClass="tableCont gray hijo" AutoGenerateColumns="false" OnRowCommand="gvhistorial_RowCommand" OnRowDataBound="gvhistorial_RowDataBound">
+        <asp:GridView ID="gvhistorial" runat="server" CssClass="tableCont gray hijo i50" AutoGenerateColumns="false" OnRowCommand="gvhistorial_RowCommand" OnRowDataBound="gvhistorial_RowDataBound">
             <Columns>
                 <asp:BoundField DataField="Selección"/>
                 <asp:BoundField DataField="Categoria"/>
@@ -85,7 +90,7 @@
         $(document).ready(function () {
             var tamanoregistro = $('.dttamano').width();
             var tamanohistorial = $('#ContentPlaceHolder1_gvhistorial').width();
-            var tamanototal = tamanohistorial + 20 + tamanoregistro;
+            var tamanototal = tamanohistorial + 70 + tamanoregistro;
             $('.contenedor').css('width', tamanototal + 'px');
 
         });
