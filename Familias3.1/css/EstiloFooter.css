@@ -1,0 +1,13 @@
+﻿.piePagina{
+    background-color:rgb(33, 150, 243);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    right:0px;
+    left:0px;
+    color:white;
+    height:70px;
+
+}
+
+

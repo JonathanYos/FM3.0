@@ -1,0 +1,238 @@
+﻿html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+body {
+    background:
+    /* top, transparent red, faked with gradient */
+    linear-gradient( rgba(42,42,44,.4), rgba(42,42,44,.4) ),
+    /* bottom, image */
+    url("../Images/FamiliasCollage.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.loginCont {
+    background: rgba(255, 255, 255,0.9);
+    width: 290px;
+    margin: 70px auto;
+    padding: 30px 30px;
+    padding-bottom: 23px;
+    text-align: left;
+    position: relative;
+    display: block;
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-origin: padding-box;
+    -webkit-tap-highlight-color: black;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.loginContHeader {
+    padding: 10px 15px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    border-bottom-style: none;
+    border-image-slice: 100%;
+}
+
+.loginLogoCommonHope {
+    width: 270px;
+    text-align: center;
+}
+
+.loginContBody {
+    box-sizing: border-box;
+    position: relative;
+    padding: 15px 15px;
+    padding-left: 10px;
+    padding-top: 0px;
+}
+
+.groupLogin {
+    box-sizing: border-box;
+    clear: both;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    text-size-adjust: 100%;
+    display: block;
+}
+
+.mensaje {
+    text-align: center;
+    width: 100%;
+    top: 200px;
+}
+
+.tablac {
+    width: 90%;
+    text-align: center;
+}
+
+.etiquetas {
+    text-align: left;
+    font-size: 18px;
+    color: rgb(115,114,117);
+}
+
+.user, .pass {
+    color: rgb(115,114,117);
+}
+
+#txtuser, #txtpass {
+    /*border-top: 2px solid #000;
+    border-left: 2px solid #000;*/
+    margin-top: 7px;
+}
+
+#txtuser, #txtpass {
+    font-size: 15px;
+}
+
+.btn {
+    text-align: left;
+}
+
+.buttom {
+    border-style: none;
+    border-radius: 4px 4px;
+    cursor: pointer;
+    padding: 0px 0px;
+    background: #3498db;
+    color: white;
+    position: relative;
+    padding-left: 8px;
+    padding-right: 8px;
+    left: 0;
+    top: 2px;
+    border-color: #3498db;
+    text-align: left;
+}
+
+    .buttom:hover {
+        background-color: #57A9E0;
+    }
+
+.buttomSec {
+    border-style: none;
+    border-radius: 4px 4px;
+    cursor: pointer;
+    padding: 0px 0px;
+    background: gray;
+    color: white;
+    position: relative;
+    padding-left: 8px;
+    padding-right: 8px;
+    left: 0;
+    top: 2px;
+    border-color: gray;
+    text-align: left;
+}
+
+    .buttomSec:hover {
+        background-color: #919191;
+    }
+
+    .buttomRet {
+    border-style: none;
+    border-radius: 4px 4px;
+    cursor: pointer;
+    padding: 0px 0px;
+    background: #86C0A7;
+    color: white;
+    position: relative;
+    padding-left: 8px;
+    padding-right: 8px;
+    left: 0;
+    top: 2px;
+    border-color: gray;
+    text-align: left;
+}
+
+    .buttomRet:hover {
+        background-color: #9DD3BC;
+    }
+
+.clogo {
+    text-align: center;
+}
+
+.iconss {
+    background: rgb(256,256,256);
+    display: inline-table;
+    top: 7px;
+    left: 5px;
+    width: 35px;
+    height: 25px;
+    position: relative;
+    border-radius: 10%;
+    margin: 0;
+    border: 1px solid #000;
+}
+
+.divTxbLogin {
+    top: 2px;
+    display: inline-table;
+    position: relative;
+}
+
+footer {
+    position: fixed;
+    background: rgb(51,51,51) /*, rgb(0,128,128)*/;
+    color: #fff;
+    text-align: left;
+    width: 100%;
+    bottom: 0;
+    left: 0%;
+}
+
+.Espaciado {
+    padding: 5px 10px;
+}
+
+@media screen and (max-width:1070px) {
+    html {
+    }
+
+    .contenedor1 {
+        background: rgba(255, 255, 255,0.9);
+        width: 290px;
+        margin: 50px auto;
+        padding: 30px 30px;
+        text-align: left;
+        position: relative;
+        display: inline-block;
+        background-attachment: scroll;
+        background-clip: border-box;
+        background-origin: padding-box;
+        -webkit-tap-highlight-color: black;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+    /*.contenedor {
+    background:rgba(255, 255, 255,0.9);
+    width:290px;
+    margin: auto;
+    padding:30px 30px;
+    text-align:left;
+    position:relative;
+    display:block;
+    background-attachment:scroll;
+    background-clip:border-box;
+    background-origin:padding-box;
+    -webkit-tap-highlight-color:black;
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;*/
+
+    /*}*/
+}

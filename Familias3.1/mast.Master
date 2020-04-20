@@ -1,0 +1,625 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="mast.master.cs" Inherits="Familias3._1.mast" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title></title>
+    <link rel="icon" href="Images/CommonHopeIcon.png" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/estiloFooter.css" type="text/css" />
+    <link rel="stylesheet" href="css/estiloForm.css" type="text/css" />
+    <link rel="stylesheet" href="css/estiloFormAJAX.css" type="text/css" />
+    <link rel="stylesheet" href="css/estiloHeader.css" type="text/css" />
+    <link rel="stylesheet" href="css/estiloMenu.css" type="text/css" />
+    <link rel="stylesheet" href="css/estiloTabla.css" type="text/css" />
+    <link rel="stylesheet" href="css/estiloTabs.css" type="text/css" />
+    <link rel="stylesheet" href="css/estiloDivResponsive.css" type="text/css" />
+    <link rel="stylesheet" href="css/EstilosAPAD.css" type="text/css" />
+    <link rel="stylesheet" href="css/EstiloModal.css" type="text/css" />
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+
+</head>
+<body onload="noatras();">
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server">
+        </asp:ScriptManager>
+        <header class="head">
+            <div class="navbar">
+                <div class="elementoMenu">
+                    <button class="dropbtn mostrarMenu" type="button">
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                        <asp:Label runat="server" ID="lblMenu"></asp:Label>
+                    </button>
+                </div>
+                <div class="elementoMenu">
+                    <button class="dropbtn" type="button" onclick="location.href = '../MISC/Buscar.aspx';">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <asp:Label runat="server" ID="lblBuscar"></asp:Label>
+                    </button>
+                </div>
+                <asp:Panel ID="pnlRepetir" runat="server" Visible="false" class="elementoMenu">
+                    <asp:LinkButton runat="server" ID="lnkRepetir" Style="text-decoration: none" OnClick="lnkRepetir_Click">
+                        <div class="dropbtn">
+                            <i class="fa fa-repeat" aria-hidden="true"></i>
+                            <asp:Label runat="server" ID="lblRepetir">Repetir</asp:Label>
+                        </div>
+                    </asp:LinkButton>
+                </asp:Panel>
+                <asp:Panel ID="pnlImagenLogo" class="elementoMenu logo" runat="server">
+                    <asp:Image ID="imgCommonHopeLogo" class="imageLogo" runat="server" Height="40px" Style="margin-top: 5px" />
+                </asp:Panel>
+
+
+                <div class="elementoMenu right rtl">
+                    <div class="dropdiv minidrop">
+                        <asp:Label runat="server" class="" ID="lblSitio"></asp:Label>
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                    </div>
+                    <button class="btnUsuario dropbtn minidrop right" type="button">
+                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                        <asp:Label class="" ID="lblUsuario" runat="server"></asp:Label>
+                    </button>
+                    <div class="elementoMenu-content" id="myDropdown">
+                        <asp:HyperLink ID="lnkChanPref" runat="server" href="../MISC/CambiarPreferencias.aspx">Cambiar Preferencias</asp:HyperLink>
+                        <asp:HyperLink ID="lnkChanPsw" runat="server" href="../MISC/CambiarContrasena.aspx">Cambiar Contraseña</asp:HyperLink>
+                        <asp:HyperLink ID="lnkLogout" runat="server" href="../MISC/Logout.aspx">Cerrar Sesión</asp:HyperLink>
+                    </div>
+                </div>
+                <%--<div class="elementoMenu right">
+                    <div class="dropdiv">
+                        <asp:Label  class="" ID="lblUsuario" runat="server"></asp:Label>
+                    </div>
+                </div>--%>
+                <div class="elementoMenu right">
+                </div>
+            </div>
+            <div class="adorno">
+            </div>
+            <asp:Panel runat="server" ID="pnlMenu" CssClass="pnlMenu">
+                <%--<asp:Menu ID="mnuPrincipal" runat="server">
+            </asp:Menu>--%>
+                <div class="menu sd">
+                    <ul>
+                        <% System.Data.DataTable tblAreas = s.retornaAreasMenu(S, L, U);
+                           System.Data.DataTable tblFuncion;
+                           String codigoArea;
+                           String nombreArea;
+                           String nombreFuncion;
+                           String linkFuncion;
+                           foreach (System.Data.DataRow rowArea in tblAreas.Rows)
+                           {
+                               codigoArea = rowArea["Code"].ToString();
+                               nombreArea = rowArea["Des"].ToString();
+                               tblFuncion = s.retornaNombresPaginasMenu(U, S, L, codigoArea);
+                               Response.Write("<li><a>" + nombreArea + "&nbsp<i class=\"fa fa-chevron-down\" aria-hidden=\"true\"></i></a><ul>");
+                               foreach (System.Data.DataRow rowFuncion in tblFuncion.Rows)
+                               {
+                                   nombreFuncion = rowFuncion["Des"].ToString();
+                                   linkFuncion = "..\\" + codigoArea + "\\" + rowFuncion["Link"].ToString();
+                                   Response.Write("<li><a href=\"" + linkFuncion + "\">&nbsp&nbsp&nbsp" + nombreFuncion + "</a></li>");
+                               }
+                               Response.Write("</ul></li>");
+                           }
+                        %>
+                        <%--<%  System.Data.DataTable tblAreas = UBD.obtenerAreasDeUsuario(U, S, L);
+                        System.Data.DataTable tblFuncion;
+                        String codigoArea;
+                        String nombreArea;
+                        String nombreFuncion;
+                        foreach (System.Data.DataRow rowArea in tblAreas.Rows)
+                        {
+                            codigoArea = rowArea["Code"].ToString();
+                            nombreArea = rowArea["Area"].ToString();
+                            tblFuncion = UBD.obtenerFuncionesDeUsuario(U, S, L, codigoArea);
+                            Response.Write("<li><a>" + nombreArea + "&nbsp<i class=\"fa fa-chevron-down\" aria-hidden=\"true\"></i></a><ul>");
+                            foreach (System.Data.DataRow rowFuncion in tblFuncion.Rows)
+                            {
+                                nombreFuncion = rowFuncion["Trans"].ToString();
+                                Response.Write("<li><a>&nbsp&nbsp&nbsp" + nombreFuncion + "</a></li>");
+                                nombreFuncion = rowFuncion["Trans"].ToString();
+                            }
+                            Response.Write("</ul></li>");
+                        }%>--%>
+                        <%-- <div class="menu">
+                    <ul>
+                    <li><a>TRABAJO SOCIAL&nbsp<i class="fa fa-chevron-down" aria-hidden="true"></i></a><ul>
+                        <li><a href="../TS/Resumen.aspx">&nbsp&nbsp&nbsp Resumen</a></li>
+                        <li><a href="../TS/Historial.aspx">&nbsp&nbsp&nbsp Historial</a></li>
+                        <li><a href="../TS/Visitas.aspx">&nbsp&nbsp&nbsp Visitas</a></li>
+                        <li><a href="../TS/CondicionesFamiliares.aspx">&nbsp&nbsp&nbsp Condiciones de Familia</a></li>
+                        <li><a href="../MISC/InformacionFamiliar.aspx">&nbsp&nbsp&nbsp Información Familiar</a></li>
+                        <li><a href="../TS/Avisos.aspx">&nbsp&nbsp&nbsp Avisos</a></li>
+                        <li><a href="../TS/AsignacionTS.aspx">&nbsp&nbsp&nbsp Asignación de Trabajador Social</a></li>
+                        <li><a href="../TS/AsignacionTSGrupo.aspx">&nbsp&nbsp&nbsp Asignación de Trabajador Social en Grupo</a></li>   
+                        <li><a href="../TS/AsignarClasificacion.aspx">&nbsp&nbsp&nbsp Clasificación Familiar</a></li>   
+                        <li><a href="../TS/Actividades.aspx">&nbsp&nbsp&nbsp Actividades</a></li>
+                        <li><a href="../TS/AñoEscolar.aspx">&nbsp&nbsp&nbsp Año Escolar</a></li>
+                        <li><a href="../TS/Viveres.aspx">&nbsp&nbsp&nbsp Víveres</a></li>
+                        <li><a href="../TS/ReportesYEstadisticas.aspx">&nbsp&nbsp&nbsp Reportes y Estadísticas</a></li>
+                        <li><a href="../TS/NADFAS.aspx">&nbsp&nbsp&nbsp NADFAS</a></li>
+                    </ul>
+                        <a>APADRINAMIENTO&nbsp<i class="fa fa-chevron-down" aria-hidden="true"></i></a><ul>
+                        <li><a href="../APAD/ResumenAPAD.aspx">&nbsp&nbsp&nbsp Resumen</a></li>   
+                        <li><a href="../APAD/ActividadesdeCategoriasAPAD.aspx">&nbsp&nbsp&nbsp Actividades de Categorías</a></li>
+                        <li><a href="../APAD/ApadrinadosPendAPAD.aspx">&nbsp&nbsp&nbsp Apadrinados Pendientes</a></li>
+                        <li><a href="../APAD/BusquedaPadrinosAPAD.aspx">&nbsp&nbsp&nbsp Búsquedas por Padrino</a></li>
+                        <li><a href="../APAD/CartasFamiliaAPAD.aspx">&nbsp&nbsp&nbsp Cartas por Familias</a></li>
+                        <li><a href="../APAD/EnviodeCartaAPAD.aspx">&nbsp&nbsp&nbsp Cartas por Familia</a></li>
+                        <li><a href="../APAD/EstadisticasAPAD.aspx">&nbsp&nbsp&nbsp Estadísticas</a></li>
+                        <li><a href="../APAD/FotoAPAD.aspx">&nbsp&nbsp&nbsp Fotos</a></li>
+                        <li><a href="../APAD/PerfilPadrinoAPAD.aspx">&nbsp&nbsp&nbsp Perfíl Padrino</a></li>
+                        <li><a href="../APAD/RegalosSelAPAD.aspx">&nbsp&nbsp&nbsp Regalos</a></li>   
+                        <li><a href="../APAD/RegistroCarnetsAPAD.aspx">&nbsp&nbsp&nbsp Carnés</a></li>   
+                        <li><a href="../APAD/RegistroCsartasAPAD.aspx">&nbsp&nbsp&nbsp Cartas</a></li>
+                        <li><a href="../APAD/RegistroRegaloAPAD.aspx">&nbsp&nbsp&nbsp Regalo</a></li>
+                        <li><a href="../APAD/RegistroRestriccionesAPAD.aspx">&nbsp&nbsp&nbsp Restricciones</a></li>
+                        <li><a href="../APAD/RegistroViveresAPAD.aspx">&nbsp&nbsp&nbsp Viveres</a></li>   
+                        <li><a href="../APAD/VisitaPadrinosAPAD.aspx">&nbsp&nbsp&nbsp Visita de Padrinos</a></li>
+                        <li><a href="../APAD/CartaPadrinoAPAD">&nbsp&nbsp&nbsp Cartas de Padrinos</a></li>
+                    </ul>
+                    </li>--%>
+                    </ul>
+                </div>
+            </asp:Panel>
+            <asp:Panel ID="pnlHeader" class="navbar subNav" runat="server">
+                <asp:Panel runat="server" ID="pnlMiembroSel" class="elementoMenu" Visible="false">
+                    <div class="dropdiv subDiv">
+                        <asp:Label ID="lblMiembroSel" runat="server"></asp:Label>
+                        <asp:Label ID="lblNombreMiembroSel" runat="server"></asp:Label>
+                        &nbsp;<span>(</span>
+                        <asp:LinkButton ID="lnkMiembroSel" runat="server" OnClick="lnkMiembroSel_Click"></asp:LinkButton>
+                        <span>)</span>
+                    </div>
+                </asp:Panel>
+                <div class="elementoMenu titulo">
+                    <div class="dropdiv subDiv">
+                        <asp:Label ID="lblTituloFn" runat="server" Text="-"></asp:Label>
+                    </div>
+                </div>
+                <asp:Panel runat="server" ID="pnlFamiliaSel" class="elementoMenu right" Visible="false">
+                    <div class="dropdiv subDiv">
+                        <asp:Label ID="lblFamiliaSel" runat="server"></asp:Label>
+                        <asp:LinkButton ID="lnkFamiliaSel" runat="server" OnClick="lnkFamiliaSel_Click"></asp:LinkButton>
+                        <asp:Label ID="lblFaroSel" runat="server" Visible="false"></asp:Label>
+                    </div>
+                </asp:Panel>
+            </asp:Panel>
+            <div class="espacioMenu" style="position: absolute; width: 100%; height: 100%; display: none;">
+            </div>
+        </header>
+        <div id="divMessageBody" class="message-box">
+            <a class="close-btn" onclick="HideMessage();">x</a>
+            <div id="divMessage" class="message"></div>
+        </div>
+        <asp:Panel runat="server" ID="pnlContenido">
+            <%--<asp:UpdatePanel ID="updPnl" runat="server">
+                <ContentTemplate>--%>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+            <%--</ContentTemplate>
+            </asp:UpdatePanel>--%>
+        </asp:Panel>
+        <asp:Panel runat="server" class="formCont warnFrm" ID="pnlMensaje" Visible="false">
+            <div class="formContHeader">
+                <asp:Label ID="lblAdvMensaje" class="labelFormTitle" runat="server"></asp:Label>
+            </div>
+            <div class="formContBody">
+                <asp:Table ID="tblWait" runat="server">
+                    <asp:TableRow>
+                        <asp:TableCell>
+                            <asp:Label ID="lblMensaje" class="labelForm" runat="server" Text=""></asp:Label>
+                        </asp:TableCell>
+                    </asp:TableRow>
+                </asp:Table>
+            </div>
+            <div class="formContBody">
+                <asp:Button ID="btnOk" class="butonForm" runat="server" Text="OK" OnClick="btnOk_Click" />
+                <%--<asp:Button ID="btnOkRegresar" class="butonForm" runat="server" Text="OK" Visible ="false" OnClick="btnOkRegresar_Click"/>--%>
+            </div>
+        </asp:Panel>
+        <asp:Panel runat="server" class="formCont searchFrm" ID="pnlSelecFamilia" Visible="false">
+            <div class="formContHeader">
+            </div>
+            <div class="formContBody">
+                <asp:Table ID="tblSelecFamilia" runat="server">
+                    <asp:TableRow>
+                        <asp:TableCell>
+                            <asp:Label ID="lblSelecFamilia" class="labelBoldForm" runat="server"></asp:Label>
+                        </asp:TableCell>
+                        <asp:TableCell>
+                            <asp:TextBox ID="txbNumeroFamilia" AutoCompleteType="Disabled" class="textBoxBlueForm num2" MaxLength="7" onkeypress='return esDigito(event)' onkeyup='this.value=retornaSoloDigitos(this.value)' runat="server"></asp:TextBox>
+                        </asp:TableCell>
+                        <asp:TableCell>
+                            <asp:Button ID="btnSeleccionarFamilia" class="butonForm" runat="server" Text="Seleccionar" OnClick="btnSeleccionarFamilia_Click" />
+                        </asp:TableCell>
+                    </asp:TableRow>
+                    <asp:TableRow>
+                        <asp:TableCell>
+                            <asp:Label ID="lblSelecFaro" class="labelBoldForm" runat="server" Visible="false"></asp:Label>
+                        </asp:TableCell>
+                        <asp:TableCell>
+                            <asp:TextBox ID="txbNumeroFaro" AutoCompleteType="Disabled" class="textBoxBlueForm num2" MaxLength="7" onkeypress='return esDigito(event)' onkeyup='this.value=retornaSoloDigitos(this.value)' runat="server" Visible="false"></asp:TextBox>
+                        </asp:TableCell>
+                        <asp:TableCell></asp:TableCell>
+                    </asp:TableRow>
+                </asp:Table>
+            </div>
+            <div class="formContBody">
+            </div>
+        </asp:Panel>
+        <asp:Panel runat="server" class="formCont searchFrm" ID="pnlSelecMiembro" Visible="false">
+            <div class="formContHeader">
+            </div>
+            <div class="formContBody">
+                <asp:Table ID="tblSelecMiembro" runat="server">
+                    <asp:TableRow>
+                        <asp:TableCell>
+                            <asp:Label ID="lblSelecMiembro" class="labelBoldForm" runat="server"></asp:Label>
+                        </asp:TableCell>
+                        <asp:TableCell>
+                            <asp:TextBox ID="txbNumeroMiembro" AutoCompleteType="Disabled" class="textBoxBlueForm num2" MaxLength="7" onkeypress='return esDigito(event)' onkeyup='this.value=retornaSoloDigitos(this.value)' runat="server"></asp:TextBox>
+                        </asp:TableCell>
+                        <asp:TableCell>
+                            <asp:Button ID="btnSeleccionarMiembro" class="butonForm" runat="server" Text="Seleccionar" OnClick="btnSeleccionarMiembro_Click" />
+                        </asp:TableCell>
+                    </asp:TableRow>
+                </asp:Table>
+            </div>
+            <div class="formContBody">
+            </div>
+        </asp:Panel>
+        <asp:Panel runat="server" class="formCont searchFrm" ID="pnlSelectPadrino" Visible="false">
+            <div class="formContHeader">
+            </div>
+            <div class="formContBody">
+                <asp:Table ID="Table1" runat="server">
+                    <asp:TableRow>
+                        <asp:TableCell>
+                            <asp:Label ID="lblSelecPadrino" class="labelBoldForm" runat="server"></asp:Label>
+                        </asp:TableCell>
+                        <asp:TableCell>
+                            <asp:TextBox ID="txbNumeroPadrino" AutoCompleteType="Disabled" class="textBoxBlueForm num2" MaxLength="7" onkeypress='return esDigito(event)' runat="server"></asp:TextBox>
+                        </asp:TableCell>
+                        <asp:TableCell>
+                            <asp:Button ID="btnSeleccionarPadrino" class="butonForm" runat="server" Text="Seleccionar" OnClick="btnSeleccionarPadrino_Click" />
+                        </asp:TableCell>
+                    </asp:TableRow>
+                </asp:Table>
+            </div>
+            <div class="formContBody">
+            </div>
+        </asp:Panel>
+        <asp:Panel runat="server" CssClass="filtroOscuro" ID="pnlFiltroOscuro" Visible="false">
+            <asp:Button runat="server" ID="btnCerrarModal" CssClass="cerrarModal" Text="X" OnClick="btnCerrarModal_Click" />
+            <div style="height: 50px"></div>
+            <asp:Panel runat="server" class="formCont warnFrm" ID="pnlMensajeMdl" Visible="false">
+                <div class="formContHeader">
+                    <asp:Label ID="lblAdvMensajeMdl" class="labelFormTitle" runat="server"></asp:Label>
+                </div>
+                <div class="formContBody">
+                    <asp:Table ID="tblWaitMdl" runat="server">
+                        <asp:TableRow>
+                            <asp:TableCell>
+                                <asp:Label ID="lblMensajeMdl" class="labelForm" runat="server" Text=""></asp:Label>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
+                </div>
+                <div class="formContBody">
+                    <asp:Button ID="btnOkMdl" class="butonForm" runat="server" Text="OK" OnClick="btnOkMdl_Click" />
+                </div>
+            </asp:Panel>
+            <asp:Panel runat="server" class="formCont warnFrm" ID="pnlOpcionesMdl" Visible="false">
+                <div class="formContHeader">
+                    <asp:Label ID="lblAdvOpcionesMdl" class="labelFormTitle" runat="server"></asp:Label>
+                </div>
+                <div class="formContBody">
+                    <asp:Table ID="tblOpciones" runat="server">
+                        <asp:TableRow>
+                            <asp:TableCell>
+                                <asp:Label ID="lblOpcionesMdl" class="labelForm" runat="server" Text=""></asp:Label>
+                            </asp:TableCell>
+                        </asp:TableRow>
+                    </asp:Table>
+                </div>
+                <div class="formContBody">
+                    <asp:Button ID="btnAceptarPnlOpcionesMdl" class="butonForm" runat="server" Text="OK" OnClick="btnAceptarPnlOpcionesMdl_Click" />
+                    <asp:Button ID="btnCancelarPnlOpcionesMdl" class="butonFormSec" runat="server" Text="Cancelar" OnClick="btnCancelarPnlOpcionesMdl_Click" />
+                </div>
+            </asp:Panel>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+                <asp:Panel runat="server" ID="pnlContenidoAdaptable">
+                </asp:Panel>
+            </asp:ContentPlaceHolder>
+        </asp:Panel>
+        <div class="piePagina" style="height: 15.5px">
+            <footer class="" style="background-color: rgb(69, 158, 232); padding-top: 0px">
+                <!-- Copyright -->
+                <div style="font-size: .7em" class="">
+                    ©Common Hope 2019 - 02-2019 v. 1
+                </div>
+                <!-- Copyright -->
+            </footer>
+        </div>
+        <script type="text/javascript">
+            function selectElementContents(el) {
+                alert(el);
+                var body = document.body, range, sel;
+                if (document.createRange && window.getSelection) {
+                    range = document.createRange();
+                    sel = window.getSelection();
+                    sel.removeAllRanges();
+                    try {
+                        range.selectNodeContents(el);
+                        sel.addRange(range);
+                    } catch (e) {
+                        range.selectNode(el);
+                        sel.addRange(range);
+                    }
+                    document.execCommand("copy");
+
+                } else if (body.createTextRange) {
+                    range = body.createTextRange();
+                    range.moveToElementText(el);
+                    range.select();
+                    range.execCommand("Copy");
+                }
+                if (window.getSelection) { window.getSelection().removeAllRanges(); }
+                else if (document.selection) { document.selection.empty(); }
+            }
+        </script>
+        <script type="text/javascript">
+            var msgBoxTimeout;
+            var timeToShow = 5000;
+            var msgBoxRight = -320;
+
+            function ShowMessage(msg, type) {
+                try {
+                    clearInterval(msgBoxTimeout);
+                    $("#divMessageBody").css("right", msgBoxRight);
+
+                    var classAttr = "message-box " + type;
+                    $("#divMessage").html(msg);
+                    $("#divMessageBody").attr("class", classAttr);
+
+                    $("#divMessageBody").stop().animate({
+                        right: "0px"
+                    }, 700);
+
+                    msgBoxTimeout = setTimeout(function () {
+                        HideMessage();
+                    }, timeToShow);
+                } catch (e) {
+                    alert(e.message.toString());
+                }
+            }
+
+            function HideMessage() {
+                $("#divMessageBody").stop().animate({
+                    right: msgBoxRight
+                }, 900);
+
+                clearInterval(msgBoxTimeout);
+            }
+        </script>
+    </form>
+    <script type="text/javascript">
+        function retornaSoloMoneda(string) {
+            var out = '';
+            var filtro = '1234567890.';
+            for (var i = 0; i < string.length; i++) {
+                if (filtro.indexOf(string.charAt(i)) != -1) {
+                    out += string.charAt(i);
+                }
+            }
+            return out;
+        }
+    </script>
+    <script type="text/javascript">
+        function esMoneda(evt) {
+            evt.value;
+            alert(evt.value);
+            var filter = /^\d{1,4}(\,\d{1,2})?$/;
+            var text = evt;
+            if (!filter.test(text)) {
+                return false;
+            }
+            return true;
+        }
+    </script>
+    <script>
+        var valorAnterior;
+        function keyDownMonedas(value) {
+            valorAnterior = value;
+        }
+
+        function keyUpMonedas(valor) {
+            var filtro = /^\d{0,4}(\.\d{0,2})?$/;
+            if (filtro.test(valor)) {
+                return valor;
+            }
+            return valorAnterior;
+        }
+    </script>
+    <script type="text/javascript">
+        function retornaSoloDigitos(string) {
+            var out = '';
+            var filtro = '1234567890';
+            for (var i = 0; i < string.length; i++) {
+                if (filtro.indexOf(string.charAt(i)) != -1) {
+                    out += string.charAt(i);
+                }
+            }
+            return out;
+        }
+    </script>
+    <script type="text/javascript">
+        function esDigito(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+    </script>
+    <script type="text/javascript">
+        function retornaSoloLetras(string) {
+            var out = '';
+            var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZÁÉÍÓÚáéíóú ';
+            for (var i = 0; i < string.length; i++) {
+                if (filtro.indexOf(string.charAt(i)) != -1) {
+                    out += string.charAt(i);
+                }
+            }
+            return out;
+        }
+    </script>
+    <script type="text/javascript">
+        function esLetra(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode == 32 || charCode == 193 || charCode == 201 || charCode == 205 || charCode == 209 || charCode == 211 || charCode == 218 || charCode == 225 || charCode == 233 || charCode == 237 || charCode == 241 || charCode == 243 || charCode == 250)
+                return true;
+            if (charCode > 31 && (charCode < 65 || charCode > 90) && (charCode < 97 || charCode > 122))
+                return false;
+            return true;
+        }
+    </script>
+
+    <script type="text/javascript">
+        function retornaSoloLetrasBusqueda(string) {
+            var out = '';
+            var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZÁÉÍÓÚáéíóú%_ ';
+            for (var i = 0; i < string.length; i++) {
+                if (filtro.indexOf(string.charAt(i)) != -1) {
+                    out += string.charAt(i);
+                }
+            }
+            return out;
+        }
+    </script>
+    <script type="text/javascript">
+        function esLetraBusqueda(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            if (charCode == 32 || charCode == 37 || charCode == 95 || charCode == 193 || charCode == 201 || charCode == 205 || charCode == 209 || charCode == 211 || charCode == 218 || charCode == 225 || charCode == 233 || charCode == 237 || charCode == 241 || charCode == 243 || charCode == 250)
+                return true;
+            if (charCode > 31 && (charCode < 65 || charCode > 90) && (charCode < 97 || charCode > 122))
+                return false;
+            return true;
+        }
+    </script>
+
+
+    <script>
+        var ocultarSubMenu;
+        $(document).ready(function () {
+            ocultarSubMenu = 1;
+            $(".btnUsuario").click(function () {
+                document.getElementById("myDropdown").classList.toggle("show");
+                if (ocultarSubMenu == 0) {
+                    ocultarSubMenu = 1;
+                }
+                else if (ocultarSubMenu == 1) {
+                    ocultarSubMenu = 0;
+                }
+            });
+        });
+
+        $(document).mouseup(function (e) {
+            var container = $(".myDropdown, .btnUsuario");
+            if (!container.is(e.target) && container.has(e.target).length === 0) {
+                if (ocultarSubMenu == 0) {
+                    //$(".myDropdown").animate({
+                    //    width: "toggle"
+                    //});
+                    document.getElementById("myDropdown").classList.toggle("show");
+                    ocultarSubMenu = 1;
+                }
+            }
+        });
+    </script>
+    <script>
+        var ocultarMenu;
+        $(document).ready(function () {
+            var tamano = $(".espacioMenu").height();
+            tamano = tamano - 65;
+            $('.pnlMenu').css('height', tamano + 'px')
+            $('.pnlMenu').css('background', '#f2efef');
+
+            ocultarMenu = 1;
+            $(".menu ul li a").addClass("menu__enlace");
+            $(".menu ul ul").addClass("submenu");
+            $(".menu ul ul a").removeClass("menu__enlace").addClass("submenu__enlace");
+            $(".submenu").hide();
+            $(".pnlMenu").hide();
+            $(".mostrarMenu").click(function () {
+                $(".pnlMenu").animate({
+                    width: "toggle"
+                });
+                if (ocultarMenu == 0) {
+                    ocultarMenu = 1;
+                }
+                else if (ocultarMenu == 1) {
+                    ocultarMenu = 0;
+                }
+            });
+
+
+            //$(".submenu").before(innerHTML = "\u25bc");
+            //$('.submenu')
+            //despliega solo el submenu de ese menu concreto
+            $('.menu__enlace').click(function (event) {
+                var elem = $(this).next();
+
+                if (elem.is('ul')) {
+                    event.preventDefault();
+                    elem.slideToggle();
+                }
+            });
+            $('.submenu__enlace').click(function (event) {
+                var elem = $(this).next();
+
+                if (elem.is('ul')) {
+                    event.preventDefault();
+                    elem.slideToggle();
+                }
+            });
+
+        });
+
+        $(document).mouseup(function (e) {
+            var container = $(".pnlMenu, .mostrarMenu");
+            if (!container.is(e.target) && container.has(e.target).length === 0) {
+                if (ocultarMenu == 0) {
+                    $(".pnlMenu").animate({
+                        width: "toggle"
+                    });
+                    ocultarMenu = 1;
+                }
+            }
+        });
+    </script>
+    <script>
+        function noatras() {
+            if ((window.location.pathname != "/MISC/PerfilMiembro.aspx") && (window.location.pathname != "/MISC/PerfilFamilia.aspx")) {
+                window.location.hash = "no-back-button";
+                window.location.hash = "Again-No-back-button"
+                window.onhashchange = function () {
+                    window.location.hash = "no-back-button";
+                }
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('input.noPaste').bind('copy paste', function (e) {
+                e.preventDefault();
+            });
+        });
+    </script>
+</body>
+</html>

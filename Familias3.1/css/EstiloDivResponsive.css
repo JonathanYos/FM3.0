@@ -1,0 +1,42 @@
+﻿#main-container {
+
+ background-color: grey;
+}
+
+.block {
+     /*width: 31.33%; height: 150px;*/
+      float: left;
+       margin: 1%;
+}
+
+.activities{
+    width:15%;
+    max-height:25vh;
+    overflow:auto;
+    background-color: green;
+    text-align:left;
+}
+.special{
+    width:auto;
+}
+  
+/*@media screen and (max-width:640px)
+  .block
+    background-color: blue
+    width: 47.9%
+  
+    &:first-child
+      width: 98%
+      background-color: red
+      clear: both
+  
+    &:last-child
+      width: 98%
+      background-color: darkgreen
+      clear: both
+  
+  @media screen and (max-width:320px)
+    .block
+      width: 98%*/
+
+

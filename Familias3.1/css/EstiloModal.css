@@ -1,0 +1,35 @@
+﻿.filtroOscuro {
+    z-index: 50000;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,.3);
+}
+
+.contenidoModal {
+    max-width: 600px;
+    margin: 8% auto;
+    position: relative;
+    z-index: 2000;
+    background: #fff;
+    overflow-y: auto;
+    max-height: 80%;
+    border-radius: 5px;
+    border: 1px solid #333333;
+}
+
+.cerrarModal {
+    border-color: transparent;
+    background: transparent;
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    padding: 5px 5px;
+    right: 10px;
+    font-weight: bold;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+}

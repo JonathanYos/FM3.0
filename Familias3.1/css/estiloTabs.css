@@ -1,0 +1,118 @@
+﻿
+
+.contenedor {
+    margin: 10px auto;
+    width: 100%;
+    /*height: 500px;*/
+}
+
+.cabecera {
+    display: inline-block;
+    text-decoration: none;
+    padding: 5px 5px;
+    border: 1px solid white;
+    position: relative;
+    color: black;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    transform: translateY(1px);
+    z-index: 2;
+    background-color: #e6f3ff;
+    font-family: sans-serif;
+    color: white;
+    min-width: 50px;
+    font-size: 12px;
+    font-weight: bold;
+    /*text-shadow: -1px -1px 0 #000,
+         1px -1px 0 #000,
+         -1px 1px 0 #000,
+         1px 1px 0 #000;*/
+    text-shadow: -1px 0.5px 2px #777777;
+}
+
+.blueCbc {
+    background-color: #5AB8FF;
+}
+
+    .blueCbc:hover {
+        background-color: #76C4FF;
+    }
+
+.pinkCbc {
+    background-color: #C17CA3;
+}
+
+    .pinkCbc:hover {
+        background-color: #CD8DB2;
+    }
+
+.orangeCbc {
+    background-color: #FFB57C;
+}
+
+    .orangeCbc:hover {
+        background-color: #FFC89C;
+    }
+
+.purpleCbc {
+    background-color: #BA8EE8;
+}
+
+    .purpleCbc:hover {
+        background-color: #D0AEF4;
+    }
+
+.greenCbc {
+    background-color: #86C0A7;
+}
+
+    .greenCbc:hover {
+        background-color: #9DD3BC;
+    }
+
+.pestana {
+    border: 0px solid gray;
+    background-color: transparent;
+}
+
+.p-activa {
+    visibility: visible;
+    opacity: 1;
+}
+
+.c-activa {
+    border-top: 1px solid #cdcdcd;
+    border-left: 1px solid #cdcdcd;
+    border-right: 1px solid #cdcdcd;
+    color: #585858;
+    background-color: transparent;
+    text-shadow: -1px -1px 0 white,
+         1px -1px 0 white,
+         -1px 1px 0 white,
+         1px 1px 0 white;
+
+}
+
+    .c-activa:hover {
+        color: #585858;
+        background-color: white;
+        text-shadow: -1px -1px 0 white,
+         1px -1px 0 white,
+         -1px 1px 0 white,
+         1px 1px 0 white;
+    }
+
+p {
+    text-align: justify;
+    padding: 10px;
+}
+
+#divPosesiones table {
+    width: 100%;
+}
+
+.cabecera:active {
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+    border-right: 1px solid #000;
+}

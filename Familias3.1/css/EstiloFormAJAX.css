@@ -1,0 +1,157 @@
+﻿/*CALENDAR EXTENDER*/
+div.ajax__calendar_days table tr td {
+    padding-right: 0px;
+}
+
+div.ajax_calendar {
+}
+
+div.ajax__calendar_header {
+    width: 180px;
+}
+
+div.ajax__calendar_body {
+    width: 190px;
+    text-align: center;
+}
+
+div.ajax__calendar_container {
+    width: 190px;
+    background: #fff;
+    z-index: 3;
+    border: 1px solid #000;
+}
+
+div.ajax__calendar_days table tr th {
+    padding-right: 0px;
+}
+
+div.ajax__calendar_days table {
+    margin: 0;
+    padding: 0;
+    width: 50px;
+}
+
+.ajax__calendar_dayname {
+    background: black;
+    color: #fff;
+    margin: 0;
+}
+
+.ajax__calendar_day {
+    background: #179CD8;
+    color: white;
+}
+
+/*VALIDATOR CALLOUT EXTENDER*/
+
+/*.customCalloutStyle div, .customCalloutStyle td
+        {
+            border: solid 1px Black;
+            background-color: Blue;
+        }
+        .customCalloutStyle .ajax__validatorcallout_popup_table
+        {
+            display: none;
+            border: none;
+            background-color: transparent;
+            padding: 0px;
+        }
+        .customCalloutStyle .ajax__validatorcallout_popup_table_row
+        {
+            vertical-align: top;
+            height: 100%;
+            background-color: transparent;
+            padding: 0px;
+        }
+        .customCalloutStyle .ajax__validatorcallout_callout_cell
+        {
+            width: 20px;
+            height: 100%;
+            text-align: right;
+            vertical-align: top;
+            border: none;
+            background-color: transparent;
+            padding: 0px;
+        }
+        .customCalloutStyle .ajax__validatorcallout_callout_table
+        {
+            height: 100%;
+            border: none;
+            background-color: transparent;
+            padding: 0px;
+        }
+        .customCalloutStyle .ajax__validatorcallout_callout_table_row
+        {
+            background-color: transparent;
+            padding: 0px;
+        }
+        .customCalloutStyle .ajax__validatorcallout_callout_arrow_cell
+        {
+            padding: 8px 0px 0px 0px;
+            text-align: right;
+            vertical-align: top;
+            font-size: 1px;
+            border: none;
+            background-color: transparent;
+        }
+        .customCalloutStyle .ajax__validatorcallout_callout_arrow_cell .ajax__validatorcallout_innerdiv
+        {
+            font-size: 1px;
+            position: relative;
+            left: 1px;
+            border-bottom: none;
+            border-right: none;
+            border-left: none;
+            width: 15px;
+            background-color: transparent;
+            padding: 0px;
+        }
+        .customCalloutStyle .ajax__validatorcallout_callout_arrow_cell .ajax__validatorcallout_innerdiv div
+        {
+            height: 1px;
+            overflow: hidden;
+            border-top: none;
+            border-bottom: none;
+            border-right: none;
+            padding: 0px;
+            margin-left: auto;
+        }
+        .customCalloutStyle .ajax__validatorcallout_error_message_cell
+        {
+            font-family: Verdana;
+            font-size: 10px;
+            padding: 5px;
+            border-right: none;
+            border-left: none;
+            width: 100%;
+        }
+        .customCalloutStyle .ajax__validatorcallout_icon_cell
+        {
+            width: 20px;
+            padding: 5px;
+            border-right: none;
+        }
+        .customCalloutStyle .ajax__validatorcallout_close_button_cell
+        {
+            vertical-align: top;
+            padding: 0px;
+            text-align: right;
+            border-left: none;
+        }
+        .customCalloutStyle .ajax__validatorcallout_close_button_cell .ajax__validatorcallout_innerdiv
+        {
+            border: none;
+            text-align: center;
+            width: 10px;
+            padding: 2px;
+            cursor: pointer;
+        }
+               .customvalidatorcallout div, .customvalidatorcallout td { border:solid 1px red; background-color:#fff; }
+.customvalidatorcallout .ajax__validatorcallout_error_message_cell {font-size:12px;padding-top:10px;padding-bottom:10px;color:Red;-moz-box-shadow: 2px 2px 2px gray;-webkit-box-shadow: 2px 2px 2px gray;box-shadow: 2px 2px 2px gray;}
+.customvalidatorcallout .ajax__validatorcallout_close_button_cell {padding:2px;-moz-border-radius-topright:5px;-moz-border-radius-bottomright:5px;border-top-right-radius:5px;border-bottom-right-radius:5px;-moz-box-shadow: 2px 2px 2px gray;-webkit-box-shadow: 2px 2px 2px gray;box-shadow: 2px 2px 2px gray;}
+.customvalidatorcallout .ajax__validatorcallout_icon_cell { padding-top:7px; -moz-border-radius-topleft:5px;-moz-border-radius-bottomleft:5px;border-top-left-radius:5px;border-bottom-left-radius:5px;-moz-box-shadow: 2px 2px 2px gray;-webkit-box-shadow: 2px 2px 2px gray;box-shadow: 2px 2px 2px gray;}
+.customvalidatorcallout .ajax__validatorcallout_close_button_cell .ajax__validatorcallout_innerdiv {border:none !important; text-align:center;width:24px;padding:0px 0px 2px 2px;cursor:pointer;}
+.customvalidatorcallout .ajax__validatorcallout_close_button_cell .ajax__validatorcallout_innerdiv img { border:1px solid orange; background-color:Red; }
+.customvalidatorcallout .ajax__validatorcallout_close_button_cell .ajax__validatorcallout_innerdiv img:hover { border:1px solid gold; }*/
+    

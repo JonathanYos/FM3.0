@@ -1,0 +1,531 @@
+﻿.prifila {
+    display: block;
+}
+
+.tb-Persona {
+    width: 475px;
+}
+
+.tb-Generales {
+    margin-top: 0;
+}
+
+.imgapadfoto {
+    width: 200px;
+}
+
+.tblPad {
+    width: 80%;
+    min-width: 390PX;
+    max-width: 800PX;
+}
+
+.gv-padrinos {
+    width: 100%;
+}
+
+.imgapadfoto {
+    margin: auto;
+    border-radius: 28px;
+}
+
+.infogen {
+    display: flex;
+}
+
+.widthall {
+    width: 100%;
+}
+
+.ingreso {
+    position: relative;
+    top: 0;
+    display: inline;
+    margin-top: 0;
+}
+
+    .ingreso table {
+        margin: 0 auto;
+        font-size: 12px;
+        width: 100%;
+    }
+
+.tb-Persona {
+    margin-top: 10px;
+}
+
+.taman {
+    min-width: 350px;
+    max-width: 400px;
+    text-align: center;
+    margin: 10px auto;
+}
+
+div.ajax__calendar_days table tr td {
+    padding-right: 0px;
+}
+
+div.ajax__calendar_body {
+    width: 205px;
+}
+
+div.ajax__calendar_container {
+    width: 205px;
+    background: #fff;
+    z-index: 3;
+    border: 1px solid #000;
+}
+
+div.ajax__calendar_days table tr th {
+    padding-right: 0px;
+}
+
+.tbsize {
+    max-width: 600px;
+}
+
+.tdimage {
+    max-width: 295px;
+    max-height: 300px;
+    min-height:200px;
+    min-width:195px;
+}
+
+    .tdimage img {
+        border: 1px solid #cbcbcb;
+    }
+
+.separador {
+    height: 100px;
+}
+
+.indicador {
+    max-height: 100px;
+}
+
+.scroll {
+    overflow-y: scroll;
+}
+
+.ing2 {
+    height: 75px;
+    overflow-y: scroll;
+}
+
+.tamano {
+    width: 150px;
+}
+
+.retornar {
+    margin-top: 0;
+}
+
+.c {
+    color: green;
+}
+
+.x {
+    color: red;
+}
+
+
+
+.space {
+    height: 5px;
+}
+
+.combobox2 {
+    padding: 3px 5px;
+    border: 1px solid #cdcdcd;
+    background-color: AliceBlue;
+    font-size: 12px;
+    width: 150px;
+}
+
+.cntrar {
+    width: 100%;
+    display: flex;
+    padding-left: 40%;
+    padding-top: 20px;
+}
+
+h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 19px;
+}
+
+.todo {
+    width: 100%;
+}
+
+.tblCenter {
+    margin: auto auto;
+}
+
+.tblPad {
+    position: relative;
+    top: 9px;
+    left: 3px;
+}
+
+.tb-avisos {
+    display: inline;
+    position: relative;
+    margin-top: 10px;
+    margin-left: 10px;
+    top: 0px;
+    margin: 10px;
+    float: left;
+}
+
+.tb-Persona {
+    display: inline;
+    position: relative;
+    float: left;
+    margin-bottom: 10px;
+    margin-left:4px;
+}
+
+#apadall {
+    width: 100%;
+    padding-top: 5%;
+    padding-left: 5%;
+}
+
+.tb-Generales, .TBLTEL, .tb-Educacion {
+    margin: 0px 5px 5px 5px;
+}
+
+.tableCont2 td {
+    padding: 1px;
+    background: white /* #86d8f2*/;
+    border: 1px solid #D0D2D3;
+    color: black;
+    border-top: 1px solid white;
+    text-align: center;
+}
+
+.tableCont2 {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 12px;
+    border-collapse: collapse;
+    left: 3px;
+}
+
+    .tableCont2 .left {
+        text-align: left;
+        background: /*#56B1EA*/ /*#F1FAFF*/ #D8EAFA;
+        /*padding-left:5px;
+    padding-right:10px;*/
+    }
+
+    .tableCont2 .tblhead {
+        background: /*#56B1EA*/ /*#F1FAFF*/ #D8EAFA;
+        border: 1px solid #D0D2D3;
+    }
+
+.contenedor {
+    width: 100%;
+    overflow: hidden;
+}
+
+.imptabla {
+    margin: 10px auto;
+    width: 60%;
+    min-width: 500px;
+    text-align: left;
+}
+
+.inline {
+    display: inline;
+}
+/*---------------------------------------------------Cartas------------------------------------------------------*/
+.cart {
+    max-width: 400px;
+    float: left;
+    margin-bottom: 10px;
+    margin-right: 25px;
+}
+
+.historial {
+    float: left;
+}
+
+.contcart {
+    width: 100%;
+    padding: 5px;
+    margin: auto;
+}
+
+    .contcart td {
+        padding: 5px;
+        margin: auto;
+    }
+
+        .contcart td table {
+            position: relative;
+            top: 0;
+        }
+
+.cartcont {
+    display: block;
+}
+
+/*-----------------------------------------------Fotos------------------------------------------------------*/
+.fotoimg {
+    border-radius: 28px;
+    text-align: center;
+    width: 250px;
+    height:300px;
+    border:1px solid #CBCBCB;
+    margin:5px;
+}
+
+.tablafoto {
+    margin: auto;
+    margin-top: 10px;
+    max-width: 600px;
+}
+
+.fotomen {
+    text-align: center;
+    margin: auto;
+    width: 600px;
+    border: 1px solid #000;
+    border-radius: 15px;
+    color: #fff;
+    background: rgba(73, 168, 248, 0.8);
+    margin-top: 10px;
+}
+
+    .fotomen table {
+        width: 100%;
+        border: 1px solid #fff;
+    }
+
+        .fotomen table tr td {
+            font-size: 12px;
+        }
+
+.fototitulo {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.centrar {
+    margin: 10px auto;
+    left: 30%;
+}
+
+.btnbusqueda {
+    margin-top: -25px;
+    position: absolute;
+    z-index: 20000;
+    margin-left: 180px;
+}
+
+.block {
+    display: block;
+}
+/*-----------------------------------------Prototipo---------------------------------------------------*/
+#tablapruebas {
+    position: relative;
+    margin-top: 10px;
+    margin: auto;
+    text-align: center;
+}
+
+.tablapru {
+    margin-top: 10px;
+    margin: auto;
+    text-align: center;
+    display: inline;
+}
+
+.clase {
+    position: relative;
+    top: 10px;
+    margin: auto;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.pruebas {
+    margin-top: 10px;
+    position: relative;
+    left: -4%;
+    height: 400px;
+    overflow-y: scroll;
+    padding: 5px;
+    border-radius: 5px;
+    width: 70%;
+    z-index: 5;
+    top: 2px;
+}
+
+.largo {
+    width: 175px;
+}
+
+.medio {
+    width: 150px;
+}
+
+.borde {
+    padding: 10px;
+    border: 2px solid #333;
+    border-radius: 3px;
+    margin: 10px auto;
+    width: 90%;
+    min-width: 700px;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.titulo2 {
+    width: 150px;
+    text-align: center;
+    background: #333333;
+    color: #fff;
+    border-radius: 50px;
+    margin-top: -22px;
+    margin-bottom: 25px;
+    position: absolute;
+    z-index: 20000;
+}
+
+.otro {
+    margin: 10px auto;
+}
+
+.borde3 {
+    padding: 10px;
+    border: 2px solid #333;
+    border-radius: 3px;
+    margin: 10px auto;
+    width: 90%;
+    min-width: 200px;
+    min-height: 40px;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.borde4 {
+    padding: 10px;
+    border: 2px solid #333;
+    border-radius: 3px;
+    margin: 10px auto;
+    width: 85%;
+    min-width: 200px;
+    min-height: 40px;
+    max-height: 550px;
+    overflow-y: scroll;
+}
+/*-----------------------------------------Prototipo Tickets---------------------------------------------------*/
+.prototipo {
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+}
+
+.proto {
+    margin: auto;
+    margin-top: 10px;
+}
+
+.content {
+    position: relative;
+    margin: auto;
+    width: 700px;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #000;
+}
+
+.menu {
+    list-style: none;
+}
+
+    .menu table {
+        width: 100%;
+        height: 50px;
+    }
+
+.iconomenu {
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: 1px solid #fff;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.barra {
+    height: 25px;
+}
+
+.cerrar {
+    margin: 5px;
+    text-decoration: none;
+    border: 1px solid #fff;
+    background: #333333;
+    padding: 5px 10px;
+    border-radius: 50px;
+    color: #fff;
+}
+
+.cntrar2 {
+    margin: 10px auto;
+}
+
+.hijo {
+    float: left;
+    margin-left: 5px;
+    margin-bottom: 50px;
+}
+/*---------------------------------------Regalos----------------------------------------*/
+.selhistorial {
+    width: 100%;
+    height: 525px;
+}
+
+.historial {
+    width: 100%;
+}
+/*---------------------------------------Regalos----------------------------------------*/
+.alinear {
+    margin: 20px auto;
+    display: inline;
+    float: left;
+    margin-left: 25px;
+}
+
+.contenedor3 {
+    display: block;
+    position: relative;
+    left: 12%;
+    width: 75%;
+}
+
+.privar {
+    max-height: 30%;
+    border: 2px solid #333333;
+    overflow-y: scroll;
+    width: 525px;
+    max-height: 300px;
+    margin: 0 auto;
+    border-radius: 3px;
+}
+
+.Contenedor4 {
+    border: 1px solid #333333;
+    border-radius: 3px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.esp {
+    margin-left: 10px;
+    display: inline-block;
+}

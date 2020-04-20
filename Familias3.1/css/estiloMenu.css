@@ -1,0 +1,67 @@
+﻿/**::-webkit-scrollbar{
+  width: 18px;
+  border-radius: 20px;
+}
+
+*::-webkit-scrollbar-track{
+  background: #CCEEF4;
+  border-radius: 20px;
+}
+:*:-webkit-scrollbar-thumb{
+  width: 24px;
+  background: #49AEC0;
+  border: 5px solid #CCEEF4;
+  border-radius: 15px;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+.pnlMenu{
+    /*display: none;
+    direction:rlt; */
+    position:absolute;
+    overflow-y: auto;
+    overflow-x:hidden;
+    height:85vh;
+    z-index:200000;
+    background-color: #f2efef;
+}
+.menu{
+    list-style:none;
+}
+
+.menu ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 300px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.menu ul li {
+    background-color:  #f2efef;
+    border-bottom-color: #dcdadb;
+}
+.menu ul li a {
+    /*color: #333333;*/
+    color:#696969;
+    text-decoration: none;
+    /*text-transform: uppercase;*/
+    display: block;
+    padding: 10px 10px 10px 20px;
+}
+ 
+.menu ul li a:hover {
+    background: #179cd8;
+    color: #fff;
+}
