@@ -193,6 +193,14 @@ namespace Familias3._1
             listFunciones.Add(new Funcion("AsistenciasGrupo.aspx", (int)Selec.Ninguno, "APJO", "UPAC"));
             listFunciones.Add(new Funcion("AsistenciasGrupoArchivo.aspx", (int)Selec.Ninguno, "APJO", "UPAC"));
             listFunciones.Add(new Funcion("Seguimiento.aspx", (int)Selec.Ninguno, "APJO", "UPAC"));
+
+
+            //ADMINISTRACIÓN DE BECAS
+            listFunciones.Add(new Funcion("ResumenBecas.aspx", (int)Selec.MiemFamAfilGradDesa, "EDUC", "RHEM"));
+            listFunciones.Add(new Funcion("ResumenBecas.aspx", (int)Selec.MiemFamAfilGradDesa, "EDUC", "RIAE"));
+            listFunciones.Add(new Funcion("ResumenBecas.aspx", (int)Selec.MiemFamAfilGradDesa, "EDUC", "RPEM"));
+            listFunciones.Add(new Funcion("ResumenBecas.aspx", (int)Selec.MiemFamAfilGradDesa, "EDUC", "RREM"));
+
         }
         protected void llenarPaginas()
         {
@@ -257,6 +265,10 @@ namespace Familias3._1
             listPaginas.Add(new Pagina("AsistenciasGrupo.aspx", "Registro de Asistencias en Grupo", "Assistances Registration by Group", (int)Selec.Ninguno, "APJO", true));
             listPaginas.Add(new Pagina("AsistenciasGrupoArchivo.aspx", "Registro de Asistencias por Archivo", "Assistances Registration from File", (int)Selec.Ninguno, "APJO", true));
             listPaginas.Add(new Pagina("Seguimiento.aspx", "Seguimiento", "Tracing", (int)Selec.Ninguno, "APJO", true));
+
+            //ADMINISTRACIÓN DE BECAS
+            listPaginas.Add(new Pagina("ResumenBecas.aspx", "Resumen Becas", "Becas Information Sumary", (int)Selec.MiemFamAfilGradDesa, "EDUC", true));
+
         }
         public int retornaSeguridadSeleccion(String page)
         {
@@ -299,7 +311,6 @@ namespace Familias3._1
                             }
                         }
                     }
-
                 }
                 if (areaEstaEnApp)
                 {
@@ -307,7 +318,6 @@ namespace Familias3._1
                 }
             }
             return dtAreasMenu;
-
         }
         public String retornaTitulo(String page, String L)
         {

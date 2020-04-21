@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -229,6 +230,7 @@
     <Content Include="css\EstilosAPAD.css" />
     <Content Include="css\EstiloTabla.css" />
     <Content Include="css\EstiloTabs.css" />
+    <Content Include="EDUC\ResumenBecas.aspx" />
     <Content Include="Images\FamiliasFondo2Aux.jpg" />
     <Content Include="Images\FamiliasFondo2.jpg" />
     <Content Include="Images\accent.png" />
@@ -482,6 +484,13 @@
       <DependentUpon>Seguimiento.aspx</DependentUpon>
     </Compile>
     <Compile Include="bd\BDPROE.cs" />
+    <Compile Include="EDUC\ResumenBecas.aspx.cs">
+      <DependentUpon>ResumenBecas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EDUC\ResumenBecas.aspx.designer.cs">
+      <DependentUpon>ResumenBecas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ImagenG.ashx.cs">
       <DependentUpon>ImagenG.ashx</DependentUpon>
     </Compile>
