@@ -254,12 +254,9 @@
     border-style:none;
     border-radius:4px 4px;
     cursor: pointer;
-    padding:0px 0px;
+    padding:0px 5px;
     background: #3498db;
     color:white;
-    padding-left:5px;
-    padding-right:5px;
-    height:25px;
     min-width:40px;
     /*border-color:rgb(24, 145, 213);*/
     border-color:#3498db;

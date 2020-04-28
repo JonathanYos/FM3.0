@@ -51,6 +51,9 @@
         .w100 {
             width: 100%;
         }
+        .disno{
+            display:none;
+        }
     </style>
     <asp:Panel ID="pnltodo" runat="server" class="contenedortotal">
 
@@ -170,11 +173,22 @@
                 <tr>
                     <td>
                         <div style="width: 100%; height: 400px; overflow-x: auto; display: flex; justify-content: center;">
-                            <asp:GridView ID="gvhistoriaobs" CssClass="tableCont" runat="server">
+                            <asp:GridView ID="gvhistoriaobs" CssClass="tableCont" runat="server" AutoGenerateColumns="false" OnRowDataBound="gvhistoriaobs_RowDataBound" OnRowCommand="gvhistoriaobs_RowCommand">
                                 <Columns>
                                     <asp:BoundField DataField="Categoria" />
+                                    <asp:BoundField DataField="Fecha" />
+                                    <asp:BoundField DataField="Observacion" />
+                                    <asp:BoundField DataField="Usuario" />
+                                    <asp:BoundField DataField="IdObservation" Visible="true" ItemStyle-CssClass="disno" HeaderStyle-CssClass="disno"/>
+                                    <asp:TemplateField HeaderText="Accion/Action" Visible="True">
+                                        <ItemTemplate>
+                                            <asp:Button ID="btnmodificar" CommandName="mod" CssClass="butonForm floatl" Text="Referir/Refer" runat="server" />
+                                            <asp:Button ID="btneliminar" runat="server" CommandName="del" CssClass="butonFormSec" Text="Historial/History" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
                                 </Columns>
-                            </asp:GridView>            
+                            </asp:GridView>
+                            <asp:Label ID="idObsL" runat="server" Visible="false"></asp:Label>
                         </div>
                     </td>
                 </tr>
@@ -189,7 +203,7 @@
                                 <td>
                                     <asp:DropDownList ID="ddltipoobs" CssClass="comboBoxForm w100" runat="server"></asp:DropDownList></td>
                                 <td style="width: 60px;">
-                                    <asp:Button ID="btnguardarobs" runat="server" CssClass="butonForm" />
+                                    <asp:Button ID="btnguardarobs" runat="server" CssClass="butonForm" OnClick="btnguardarobs_Click" />
                                 </td>
                             </tr>
                             <tr>
@@ -231,7 +245,7 @@
                         <asp:DropDownList ID="ddltipocal" CssClass="comboBoxForm w100" runat="server"></asp:DropDownList>
                     </td>
                     <td style="width: 200px;">
-                        <asp:Button ID="btnguardarcal" CssClass="butonForm" runat="server" Text="Button" />
+                        <asp:Button ID="btnguardarcal" CssClass="butonForm" runat="server" Text="Button" OnClick="btnguardarcal_Click" />
                     </td>
                 </tr>
                 <tr>

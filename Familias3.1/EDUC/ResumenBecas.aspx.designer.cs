@@ -283,6 +283,15 @@ namespace Familias3._1.EDUC {
         protected global::System.Web.UI.WebControls.GridView gvhistoriaobs;
         
         /// <summary>
+        /// Control idObsL.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label idObsL;
+        
+        /// <summary>
         /// Control lblnuevaobs.
         /// </summary>
         /// <remarks>

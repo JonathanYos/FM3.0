@@ -27,6 +27,7 @@ namespace Familias3._1.EDUC
         protected static string sql;
         protected static int desicion;
         protected static string ruta;
+        protected static int accion;
         string ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         SqlConnection con = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
@@ -158,6 +159,7 @@ namespace Familias3._1.EDUC
         protected void InformacionGen()
         {
             txtnotasobs.Attributes.Add("maxlength", "300");
+            txtnotascal.Attributes.Add("maxlength", "120");
             DataTable listTable = new DataTable();
             DateTime actualD = DateTime.Now;
             lblVanio.Text = actualD.Year.ToString();
@@ -167,12 +169,13 @@ namespace Familias3._1.EDUC
             string codigogrado = obtienePalabra(sql, "Code");
             sql = "SELECT Code FROM CdEducationStatus  WHERE ValidValue = 1 AND (DescSpanish='" + listTable.Rows[0]["Estado_Educ"].ToString() + "' OR DescEnglish='" + listTable.Rows[0]["Estado_Educ"].ToString() + "')";
             string codigoestado = obtienePalabra(sql, "Code");
-            sql = "SELECT Code FROM CdEducationReasonNotToContinue  WHERE Active = 1 AND (DescSpanish = '"+ listTable.Rows[0]["RazonNoContinuar"].ToString() + "' OR DescEnglish='"+listTable.Rows[0]["RazonNoContinuar"].ToString()+"') ";
+            sql = "SELECT Code FROM CdEducationReasonNotToContinue  WHERE Active = 1 AND (DescSpanish = '" + listTable.Rows[0]["RazonNoContinuar"].ToString() + "' OR DescEnglish='" + listTable.Rows[0]["RazonNoContinuar"].ToString() + "') ";
+            string codigoexestado = obtienePalabra(sql, "Code");
             ddlcarrera.SelectedValue = listTable.Rows[0]["CarreraId"].ToString();
             ddlgrado.SelectedValue = codigogrado;
             ddlescuela.SelectedValue = listTable.Rows[0]["EscuelaId"].ToString();
             ddlestado.SelectedValue = codigoestado;
-            ddlexestado.SelectedItem.Text = listTable.Rows[0]["RazonNoContinuar"].ToString();
+            ddlexestado.SelectedValue = codigoexestado;
             CreationDateL.Text = listTable.Rows[0]["CreationDT"].ToString();
             if (string.IsNullOrEmpty(listTable.Rows[0]["Edad"].ToString())) { lblnombre.Text = lblnombre.Text; }
             else { lblnombre.Text = lblnombre.Text + " - " + listTable.Rows[0]["Edad"].ToString(); }
@@ -351,12 +354,31 @@ namespace Familias3._1.EDUC
                 mst.mostrarMsjAdvNtf(ex.Message);
             }
         }
+        private void llenargrid2(string sql, GridView gv)
+        {
+            try
+            {
+                DataTable tabledata = new DataTable();
+                con.Open();
+                SqlDataAdapter adaptador = new SqlDataAdapter(sql, con);
+                DataSet setDatos = new DataSet();
+                adaptador.Fill(setDatos, "listado");
+                tabledata = setDatos.Tables["listado"];
+                con.Close();
+                gv.DataSource = tabledata;
+                gv.DataBind();
+            }
+            catch (Exception ex)
+            {
+                mst.mostrarMsjAdvNtf(ex.Message);
+            }
+        }
         private void historialobs()
         {
             try
             {
                 sql = "SELECT  cdC.DescSpanish AS Categoria, dbo.fn_GEN_FormatDate(MEO.ObservationDateTime, 'ES')  + ' ' + CONVERT(varchar, MEO.ObservationDateTime, 108)  AS Fecha, MEO.Observation AS Observacion,  MEO.UserId AS Usuario,  MEO.IdObservation  FROM  dbo.MemberEducationObservation MEO INNER JOIN dbo.CdMemberEducObservationCategory cdC ON MEO.Category = cdC.Code  WHERE MEO.RecordStatus = ' ' AND MEO.Project = '" + S + "' AND YEAR(MEO.ObservationDateTime) = " + lblVanio.Text + " AND MEO.MemberId = " + M + " ORDER BY MEO.ObservationDateTime DESC ";
-                llenargrid(sql, gvhistoriaobs);
+                llenargrid2(sql, gvhistoriaobs);
             }
             catch (Exception ex)
             {
@@ -464,6 +486,7 @@ namespace Familias3._1.EDUC
             }
             if (conteo > 0)
             {
+                accion = 1;
                 mst.mostrarMsjOpcionesMdl("Ha modificado los siguientes campos: " + cambios + ". ¿Desea Continuar? ");
             }
             else
@@ -486,23 +509,41 @@ namespace Familias3._1.EDUC
         }
         protected void accionar(object sender, EventArgs e)
         {
-            DataTable listTable = new DataTable();
-            sql = "SELECT * FROM dbo.fn_GEN_InfoGenMiembro('" + S + "', " + M + ", " + lblVanio.Text + ") L ";
-            LlenarDataTable(sql, listTable);
-            string certificado;
-            DateTime actual = DateTime.Now;
-            if (chktienecertificado.Checked == true) { certificado = "1"; } else { certificado = "0"; }
-            sql = "SELECT Code FROM dbo.CdGrade WHERE ValidValue = 1 AND(DescSpanish = '" + listTable.Rows[0]["Grado"].ToString() + "' OR DescEnglish = '" + listTable.Rows[0]["Grado"].ToString() + "') ORDER BY Orden";
-            string codigogrado = obtienePalabra(sql, "Code");
-            sql = "SELECT Code FROM CdEducationStatus  WHERE ValidValue = 1 AND (DescSpanish='" + listTable.Rows[0]["EstadoAfil"].ToString() + "' OR DescEnglish='" + listTable.Rows[0]["EstadoAfil"].ToString() + "')";
-            string codigoestado = obtienePalabra(sql, "Code");
-            Response.Write(sql);
-            sql = "INSERT INTO  dbo.MemberEducationYear SELECT Project, MemberId, SchoolYear, '" + ddlescuela.SelectedValue + "' SchoolCode, '" + ddlgrado.SelectedValue + "' Grade, '" + actual.ToString("MM/dd/yyyy HH:mm:ss TT") + "' CreationDateTime, RecordStatus,'" + U + "' UserId, ExpirationDateTime, ClassSection, PercentOfExpensesToPay, '" + ddlexestado.SelectedValue + "' ReasonNotToContinue, '" + ddlestado.SelectedValue + "' Status, '" + ddlcarrera.SelectedValue + "' Career, SingleTeacher, TransportationStartDate, TransportationEndDate, Notes, ExceptionPercent, '" + certificado + "' HasCertificate, NYSPackage, Typing FROM  dbo.MemberEducationYear WHERE RecordStatus = ' ' AND Project = '" + S + "' AND MemberId = " + M + " AND SchoolYear = " + lblVanio.Text + " AND Grade = '" + codigogrado + "' AND Status = '" + codigoestado + "' AND SchoolCode = '" + listTable.Rows[0]["EscuelaId"].ToString() + "'";
-            Response.Write(sql);
+            if (accion == 1)
+            {
+                DataTable listTable = new DataTable();
+                sql = "SELECT * FROM dbo.fn_GEN_InfoGenMiembro('" + S + "', " + M + ", " + lblVanio.Text + ") L ";
+                LlenarDataTable(sql, listTable);
+                string certificado;
+                DateTime actual = DateTime.Now;
+                if (chktienecertificado.Checked == true) { certificado = "1"; } else { certificado = "0"; }
+                sql = "SELECT Code FROM dbo.CdGrade WHERE ValidValue = 1 AND(DescSpanish = '" + listTable.Rows[0]["Grado"].ToString() + "' OR DescEnglish = '" + listTable.Rows[0]["Grado"].ToString() + "') ORDER BY Orden";
+                string codigogrado = obtienePalabra(sql, "Code");
+                sql = "SELECT Code FROM CdEducationStatus  WHERE ValidValue = 1 AND (DescSpanish='" + listTable.Rows[0]["EstadoAfil"].ToString() + "' OR DescEnglish='" + listTable.Rows[0]["EstadoAfil"].ToString() + "')";
+                string codigoestado = obtienePalabra(sql, "Code");
+                Response.Write(sql);
+                sql = "INSERT INTO  dbo.MemberEducationYear SELECT Project, MemberId, SchoolYear, '" + ddlescuela.SelectedValue + "' SchoolCode, '" + ddlgrado.SelectedValue + "' Grade, '" + actual.ToString("MM/dd/yyyy HH:mm:ss TT") + "' CreationDateTime, RecordStatus,'" + U + "' UserId, ExpirationDateTime, ClassSection, PercentOfExpensesToPay, '" + ddlexestado.SelectedValue + "' ReasonNotToContinue, '" + ddlestado.SelectedValue + "' Status, '" + ddlcarrera.SelectedValue + "' Career, SingleTeacher, TransportationStartDate, TransportationEndDate, Notes, ExceptionPercent, '" + certificado + "' HasCertificate, NYSPackage, Typing FROM  dbo.MemberEducationYear WHERE RecordStatus = ' ' AND Project = '" + S + "' AND MemberId = " + M + " AND SchoolYear = " + lblVanio.Text + " AND Grade = '" + codigogrado + "' AND Status = '" + codigoestado + "' AND SchoolCode = '" + listTable.Rows[0]["EscuelaId"].ToString() + "'";
+                APD.ejecutarSQL(sql);
 
-            //inactiva el historial del record
-            sql = "UPDATE dbo.MemberEducationYear SET RecordStatus = 'H', ExpirationDateTime = '" + actual.ToString("MM/dd/yyyy HH:mm:ss TT") + " ' WHERE  RecordStatus = ' ' AND Project = '" + S + "' AND MemberId = " + M + " AND schoolYear = " + lblVanio.Text + "  AND schoolCode = '" + listTable.Rows[0]["EscuelaId"].ToString() + "' AND grade = '" + codigogrado + "' AND Convert(nvarchar(30), CreationDateTime, 20) = '" + CreationDateL.Text + "' ";
-            Response.Write(sql);
+                //inactiva el historial del record
+                sql = "UPDATE dbo.MemberEducationYear SET RecordStatus = 'H', ExpirationDateTime = '" + actual.ToString("MM/dd/yyyy HH:mm:ss TT") + " ' WHERE  RecordStatus = ' ' AND Project = '" + S + "' AND MemberId = " + M + " AND schoolYear = " + lblVanio.Text + "  AND schoolCode = '" + listTable.Rows[0]["EscuelaId"].ToString() + "' AND grade = '" + codigogrado + "' AND Convert(nvarchar(30), CreationDateTime, 20) = '" + CreationDateL.Text + "' ";
+                APD.ejecutarSQL(sql);
+            }
+            if (accion == 2)
+            {
+                try
+                {
+                    sql = "UPDATE dbo.MemberEducationObservation SET RecordStatus = 'H', ExpirationDateTime = GETDATE(), Observation = Observation + ' (" + U + ")' WHERE RecordStatus = ' ' AND IdObservation = " + idObsL.Text + " ";
+                    APD.ejecutarSQL(sql);
+                    historialobs();
+                    mst.mostrarMsjNtf(dic.RegistroEliminadoAPAD);
+                    idObsL.Text = "";
+                }
+                catch (Exception ex)
+                {
+                    Response.Write(ex.Message);
+                }
+            }
         }
         public string obtienePalabra(String sql, String titulo)
         {
@@ -528,6 +569,118 @@ namespace Familias3._1.EDUC
                 return "";
                 mst.mostrarMsjAdvNtf(ex.Message);
             }
+        }
+
+        protected void gvhistoriaobs_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                e.Row.Cells[0].Text = dic.categoria;
+                e.Row.Cells[1].Text = dic.fecha;
+                e.Row.Cells[2].Text = dic.observaciones;
+                e.Row.Cells[3].Text = dic.usuario;
+                e.Row.Cells[5].Text = dic.accion;
+            }
+            foreach (GridViewRow gvr in gvhistoriaobs.Rows)
+            {
+                Button btn = new Button();
+                btn = (Button)gvr.FindControl("btnmodificar");
+
+                Button btn2 = new Button();
+                btn2 = (Button)gvr.FindControl("btneliminar");
+
+                btn.Text = dic.actualizar;
+                btn2.Text = dic.eliminar;
+            }
+        }
+
+        protected void btnguardarobs_Click(object sender, EventArgs e)
+        {
+            if (btnguardarobs.Text == dic.actualizar)
+            {
+                if (ddltipoobs.SelectedIndex == 0 && string.IsNullOrEmpty(txtnotasobs.Text))
+                {
+                    mst.mostrarMsjAdvNtf("Debe llenar los dos campos");
+                }
+                else
+                {
+                    string categoria, notas;
+                    categoria = ddltipoobs.SelectedValue;
+                    notas = txtnotasobs.Text;
+                    sql = "INSERT INTO dbo.MemberEducationObservation SELECT IdObservation, GETDATE(), Project, MemberId, Category, ObservationDateTime, '" + notas + "', RecordStatus, '" + U + "', ExpirationDateTime FROM dbo.MemberEducationObservation WHERE RecordStatus = ' ' AND IdObservation = " + idObsL.Text;
+                    APD.ejecutarSQL(sql);
+                    ddltipoobs.Enabled = true;
+                    ddltipoobs.SelectedIndex = 0;
+                    txtnotasobs.Text = "";
+                    historialobs();
+                    mst.mostrarMsjNtf(dic.RegistroModificadoAPAD);
+                    idObsL.Text = "";
+                    btnguardarobs.Text = dic.guardar;
+                }
+            }
+            if (btnguardarobs.Text == dic.guardar)
+            {
+                if (ddltipoobs.SelectedIndex == 0 && string.IsNullOrEmpty(txtnotasobs.Text))
+                {
+                    mst.mostrarMsjAdvNtf("Debe llenar los dos campos");
+                }
+                else
+                {
+                    int n;
+                    sql = "SELECT MAX(IdObservation) 'Ultimo' FROM MemberEducationObservation ";
+                    n = ObtenerEntero(sql, "Ultimo") + 1;
+                    DateTime fecha = DateTime.Now;
+
+                    sql = "INSERT INTO MemberEducationObservation VALUES (" + n.ToString() + ", GETDATE(), '" + S + "', " + M + ", '" + ddltipoobs.SelectedValue + "', GETDATE(), '" + txtnotasobs.Text + "', ' ', '" + U + "', NULL)";
+                    APD.ejecutarSQL(sql);
+                    ddltipoobs.SelectedIndex = 0;
+                    txtnotasobs.Text = "";
+                    historialobs();
+                    mst.mostrarMsjNtf(dic.RegistroIngresadoAPAD);
+                }
+            }
+        }
+
+        protected void gvhistoriaobs_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "mod")
+            {
+                var clickedButton = e.CommandSource as Button;
+                var clickedRow = clickedButton.NamingContainer as GridViewRow;
+
+                idObsL.Text = clickedRow.Cells[4].Text;
+                string categoria, notas, codigocategoria;
+                notas = clickedRow.Cells[2].Text;
+                categoria = clickedRow.Cells[0].Text;
+                sql = "SELECT Code FROM dbo.CdMemberEducObservationCategory WHERE Active = 1 AND (DescEnglish='" + categoria + "' OR DescSpanish='" + categoria + "') ORDER BY DescSpanish ";
+                codigocategoria = obtienePalabra(sql, "Code");
+                ddltipoobs.SelectedValue = codigocategoria;
+                txtnotasobs.Text = notas;
+                btnguardarobs.Text = dic.actualizar;
+                ddltipoobs.Enabled = false;
+            }
+            if (e.CommandName == "del")
+            {
+                var clickedButton = e.CommandSource as Button;
+                var clickedRow = clickedButton.NamingContainer as GridViewRow;
+                idObsL.Text = clickedRow.Cells[4].Text;
+                accion = 2;
+                mst.mostrarMsjOpcionesMdl("¿Desea eliminar esta observacion?");
+
+            }
+        }
+
+        protected void btnguardarcal_Click(object sender, EventArgs e)
+        {
+            DateTime actual = DateTime.Now;
+            sql = "INSERT INTO dbo.MemberActivity VALUES('" + S + "', " + M + ", '" + ddltipocal.SelectedValue + "', GETDATE(), GETDATE(), ' ', '" + U + "', NULL, '" + txtnotascal.Text + "')";
+            APD.ejecutarSQL(sql);
+            Response.Write(sql);
+            ddltipocal.SelectedIndex = 0;
+            txtnotascal.Text = "";
+            sql = "SELECT cdMAT.DescSpanish AS ACTIVIDAD, dbo.fn_GEN_FormatDate(MA.ActivityDateTime, 'ES') AS Fecha, MA.Notes AS Observaciones, MA.UserId AS Usuario FROM dbo.MemberActivity MA INNER JOIN dbo.CdMemberActivityType cdMAT ON MA.Type = cdMAT.Code WHERE MA.RecordStatus = ' ' AND cdMAT.FunctionalArea = 'EDUC' AND MA.Project = '" + S + "' AND YEAR(MA.ActivityDateTime) = " + lblVanio.Text + " AND MA.MemberId = " + M + " ORDER BY MA.ActivityDateTime DESC ";
+            llenargrid(sql, gvhistotirialcal);
+
         }
     }
 }
