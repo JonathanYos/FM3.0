@@ -5,6 +5,9 @@
             margin-left:50px;
         }
     </style>
+    <div class="formContGlobal">
+
+    
 <table class="tableCont" style="margin: 0 auto;" runat="server" id="tbfiltros">
         <tr>
             <th>
@@ -85,6 +88,7 @@
                 <asp:ButtonField ButtonType="button" HeaderText="Accion/Action" Text="Seleccionar/Select" ControlStyle-CssClass="butonForm" />
             </Columns>
         </asp:GridView>
+    </div>
     </div>
     <script>
         $(document).ready(function () {

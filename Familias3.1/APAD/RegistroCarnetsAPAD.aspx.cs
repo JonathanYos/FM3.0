@@ -270,19 +270,19 @@ namespace Familias3._1.Apadrinamiento
         {
             GuardarCarnet();
         }
-
+        
 
         protected void gvhistorial_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.Header)
-            {
-                e.Row.Cells[0].Text = dic.sitio;
-                e.Row.Cells[1].Text = dic.miembro;
-                e.Row.Cells[2].Text = dic.nombre;
-                e.Row.Cells[3].Text = dic.familia;
-                e.Row.Cells[4].Text = dic.solicitud;
-                e.Row.Cells[5].Text = dic.RenovacionAPAD;
-                e.Row.Cells[6].Text = dic.usuario;
+            { 
+            e.Row.Cells[0].Text=dic.sitio;
+            e.Row.Cells[1].Text = dic.miembro;
+            e.Row.Cells[2].Text = dic.nombre;
+            e.Row.Cells[3].Text = dic.familia;
+            e.Row.Cells[4].Text = dic.solicitud;
+            e.Row.Cells[5].Text = dic.RenovacionAPAD;
+            e.Row.Cells[6].Text = dic.usuario;
             }
         }
 
@@ -290,14 +290,14 @@ namespace Familias3._1.Apadrinamiento
         {
             string miembro = gvhistorial.Rows[Convert.ToInt32(e.CommandArgument)].Cells[1].Text;
             string nombre = gvhistorial.Rows[Convert.ToInt32(e.CommandArgument)].Cells[2].Text;
-            string consulta = "SELECT Project FROM dbo.Member WHERE RecordStatus=' ' AND MemberId=" + miembro + " AND FirstNames+' '+LastNames = '" + nombre + "'";
+            string consulta = "SELECT Project FROM dbo.Member WHERE RecordStatus=' ' AND MemberId="+miembro+" AND FirstNames+' '+LastNames = '"+nombre+"'";
             string project = obtienePalabra(consulta, "Project");
-            Response.Write(consulta + project);
-
+            Response.Write(consulta+project);
+            
             //string sql = "INSERT INTO dbo.MemberSolicitudeCard(Project,MemberId,CreationDateTime,SolicitudeDate,SolicitudeUser,RecordStatus,UserId,ExpirationDateTime,PrintDate) SELECT Project,MemberId,GETDATE() CreationDateTime,SolicitudeDate,SolicitudeUser,'H'RecordStatus,'"+U+"' UserId,GETDATE() ExpirationDateTime,PrintDate FROM dbo.MemberSolicitudeCard WHERE RecordStatus=' ' AND MemberId="+miembro+" AND Project='"+project+"'";
             //Response.Write(sql);
             //APD.ejecutarSQL(sql);
         }
-
+        
     }
 }
