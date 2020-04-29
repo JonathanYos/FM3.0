@@ -212,7 +212,7 @@
                 </td>
             </tr>
             <tr class="space">
-                <td>
+                <td style="display:flex; justify-content:center;">
                     <table class="tableCont resumen purple top10" runat="server" id="pad">
                         <tr>
                             <th>

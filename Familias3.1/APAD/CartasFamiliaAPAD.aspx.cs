@@ -26,8 +26,9 @@ namespace Familias3._1.Apadrinamiento
         string ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         SqlConnection con = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
         public string categoria;
-        public int temp3;
-        public string sitio;
+        public static string sitio;
+        public static string miembro;
+        public static string familia;
         protected void Page_Load(object sender, EventArgs e)
         {
             M = mast.M;
@@ -120,7 +121,7 @@ namespace Familias3._1.Apadrinamiento
             ddlsitio.Items.Insert(0, new ListItem(String.Empty, String.Empty));
             ddlsitio.SelectedValue = categoria;
         }
-        private void llenarhistorial(int familia, string sitio)
+        private void llenarhistorial(string familia, string sitio)
         {
             gvhistorial2.Visible = true;
             string sql = "SELECT M.Project 'Sitio',M.MemberId 'Miembro',M.FirstNames+' '+M.LastNames 'Nombre',ML.SponsorId 'Padrinos', S.SponsorNames ,ML.DateTimeWritten 'Escrita', ML.DateSent 'Enviada',CASE WHEN '" + L + "'='es' THEN LC.DescSpanish ELSE LC.DescEnglish END  'Categoria' FROM dbo.Member M INNER JOIN dbo.MemberSponsorLetter ML ON M.MemberId=ML.MemberId AND M.Project=ML.Project AND M.RecordStatus=ML.RecordStatus INNER JOIN dbo.CdLetterCategory LC ON ML.Category=LC.Code INNER JOIN dbo.Sponsor S ON M.RecordStatus=S.RecordStatus AND ML.SponsorId = S.SponsorId WHERE M.LastFamilyId='" + familia + "' AND M.RecordStatus=' ' AND M.Project='" + sitio + "' AND M.AffiliationStatus='AFIL' AND YEAR(ML.CreationDateTime)=YEAR(GETDATE()) ORDER BY ML.CreationDateTime DESC";
@@ -135,64 +136,123 @@ namespace Familias3._1.Apadrinamiento
             gvhistorial2.DataSource = tabledata;
             gvhistorial2.DataBind();
         }
-        private void mostrarhistorialF()
+        private void mostrarhistorialF(int condicional)
         {
             try
             {
-                sitio = ddlsitio.SelectedValue;
-                temp3 = Convert.ToInt32(txbfamilia.Text);
-                if (string.IsNullOrEmpty(txbfamilia.Text) || string.IsNullOrWhiteSpace(txbfamilia.Text))
+                if (condicional == 0)
                 {
-                    mostrarhistorialM();
-                }
-                string sql3 = "SELECT COUNT(*) conteo FROM dbo.Member WHERE LastFamilyId='" + temp3 + "' AND RecordStatus=' ' AND Project='" + sitio + "' AND AffiliationStatus='AFIL'";
-                int temp2 = ObtenerEntero(sql3, "conteo");
-                if (temp2 <= 0)
-                {
-                    veringreso();
-                    mst.mostrarMsjAdvNtf(dic.MsjFamilianoAfiliada);
-                    gvhistorial2.Visible = false;
-                }
-                else
-                {
-                    string sql4 = "SELECT COUNT(*) conteo FROM Member M WHERE 0 = (SELECT COUNT(*) FROM MemberSponsorLetter MSL WHERE MSL.RecordStatus = M.RecordStatus AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId AND MSL.Category = '" + categoria + "'  AND YEAR(DateTimeWritten) = YEAR(GETDATE())) AND M.RecordStatus = ' ' AND M.Project = '" + sitio + "' AND M.LastFamilyId = '" + temp3 + "' AND M.AffiliationStatus = 'AFIL'";
-                    int apadsincarta = ObtenerEntero(sql4, "conteo");
-                    if (apadsincarta <= 0)
+                    if (string.IsNullOrEmpty(txbfamilia.Text) || string.IsNullOrWhiteSpace(txbfamilia.Text))
                     {
-                        verhistorial();
-                        mst.mostrarMsjAdvNtf(dic.MsjYaingresoRegistro);
-                        llenarhistorial(temp3, sitio);
-                        btningresar.Visible = false;
-                        string sql1 = "SELECT M.Project AS Sitio, M.MemberId AS Miembro, M.FirstNames + ' ' + M.LastNames AS Nombre, dbo.fn_gen_npadrinos(M.Project,M.MemberId) Padrinos FROM Member M WHERE 0 = (SELECT COUNT(*) FROM MemberSponsorLetter MSL WHERE MSL.RecordStatus = M.RecordStatus AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId AND MSL.Category = '" + categoria + "'  AND YEAR(DateTimeWritten) = YEAR(GETDATE())) AND M.RecordStatus = ' ' AND M.Project = '" + sitio + "' AND M.LastFamilyId = '" + temp3 + "' AND M.AffiliationStatus = 'AFIL' AND  dbo.fn_gen_npadrinos(M.Project,M.MemberId)>0";
-                        DataTable tabledata;
-                        SqlConnection conexion = new SqlConnection(ConnectionString);
-                        conexion.Open();
-                        SqlDataAdapter adaptador = new SqlDataAdapter(sql1, conexion);
-                        DataSet setDatos = new DataSet();
-                        adaptador.Fill(setDatos, "listado");
-                        tabledata = setDatos.Tables["listado"];
-                        conexion.Close();
-                        gvhistorial.DataSource = tabledata;
-                        gvhistorial.DataBind();
+                        mostrarhistorialM();
+                    }
+                    string sql3 = "SELECT COUNT(*) conteo FROM dbo.Member WHERE LastFamilyId='" + familia + "' AND RecordStatus=' ' AND Project='" + sitio + "' AND AffiliationStatus='AFIL'";
+
+                    int temp2 = ObtenerEntero(sql3, "conteo");
+                    if (temp2 <= 0)
+                    {
+                        veringreso();
+                        mst.mostrarMsjAdvNtf(dic.MsjFamilianoAfiliada);
+                        gvhistorial2.Visible = false;
                     }
                     else
                     {
-                        string sql1 = "SELECT M.Project AS Sitio, M.MemberId AS Miembro, M.FirstNames + ' ' + M.LastNames AS Nombre, dbo.fn_gen_npadrinos(M.Project,M.MemberId) Padrinos FROM Member M WHERE 0 = (SELECT COUNT(*) FROM MemberSponsorLetter MSL WHERE MSL.RecordStatus = M.RecordStatus AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId AND MSL.Category = '" + categoria + "'  AND YEAR(DateTimeWritten) = YEAR(GETDATE())) AND M.RecordStatus = ' ' AND M.Project = '" + sitio + "' AND M.LastFamilyId = '" + temp3 + "' AND M.AffiliationStatus = 'AFIL' AND  dbo.fn_gen_npadrinos(M.Project,M.MemberId)>0";
-                        DataTable tabledata;
-                        SqlConnection conexion = new SqlConnection(ConnectionString);
-                        conexion.Open();
-                        SqlDataAdapter adaptador = new SqlDataAdapter(sql1, conexion);
-                        DataSet setDatos = new DataSet();
-                        adaptador.Fill(setDatos, "listado");
-                        tabledata = setDatos.Tables["listado"];
-                        conexion.Close();
-                        gvhistorial.DataSource = tabledata;
-                        gvhistorial.DataBind();
-                        llenarhistorial(temp3, sitio);
-                        verhistorial();
-                    }
+                        string sql4 = "SELECT COUNT(*) conteo FROM Member M WHERE 0 = (SELECT COUNT(*) FROM MemberSponsorLetter MSL WHERE MSL.RecordStatus = M.RecordStatus AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId AND MSL.Category = '" + categoria + "'  AND YEAR(DateTimeWritten) = YEAR(GETDATE())) AND M.RecordStatus = ' ' AND M.Project = '" + sitio + "' AND M.LastFamilyId = '" + familia + "' AND M.AffiliationStatus = 'AFIL'";
+                        int apadsincarta = ObtenerEntero(sql4, "conteo");
+                        if (apadsincarta <= 0)
+                        {
+                            verhistorial();
+                            mst.mostrarMsjAdvNtf(dic.MsjYaingresoRegistro);
+                            llenarhistorial(familia, sitio);
+                            btningresar.Visible = false;
+                            string sql1 = "SELECT M.Project AS Sitio, M.MemberId AS Miembro, M.FirstNames + ' ' + M.LastNames AS Nombre, dbo.fn_gen_npadrinos(M.Project,M.MemberId) Padrinos FROM Member M WHERE 0 = (SELECT COUNT(*) FROM MemberSponsorLetter MSL WHERE MSL.RecordStatus = M.RecordStatus AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId AND MSL.Category = '" + categoria + "'  AND YEAR(DateTimeWritten) = YEAR(GETDATE())) AND M.RecordStatus = ' ' AND M.Project = '" + sitio + "' AND M.LastFamilyId = '" + familia + "' AND M.AffiliationStatus = 'AFIL' AND  dbo.fn_gen_npadrinos(M.Project,M.MemberId)>0";
+                            DataTable tabledata;
+                            SqlConnection conexion = new SqlConnection(ConnectionString);
+                            conexion.Open();
+                            SqlDataAdapter adaptador = new SqlDataAdapter(sql1, conexion);
+                            DataSet setDatos = new DataSet();
+                            adaptador.Fill(setDatos, "listado");
+                            tabledata = setDatos.Tables["listado"];
+                            conexion.Close();
+                            gvhistorial.DataSource = tabledata;
+                            gvhistorial.DataBind();
+                        }
+                        else
+                        {
+                            string sql1 = "SELECT M.Project AS Sitio, M.MemberId AS Miembro, M.FirstNames + ' ' + M.LastNames AS Nombre, dbo.fn_gen_npadrinos(M.Project,M.MemberId) Padrinos FROM Member M WHERE 0 = (SELECT COUNT(*) FROM MemberSponsorLetter MSL WHERE MSL.RecordStatus = M.RecordStatus AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId AND MSL.Category = '" + categoria + "'  AND YEAR(DateTimeWritten) = YEAR(GETDATE())) AND M.RecordStatus = ' ' AND M.Project = '" + sitio + "' AND M.LastFamilyId = '" + familia + "' AND M.AffiliationStatus = 'AFIL' AND  dbo.fn_gen_npadrinos(M.Project,M.MemberId)>0";
+                            DataTable tabledata;
+                            SqlConnection conexion = new SqlConnection(ConnectionString);
+                            conexion.Open();
+                            SqlDataAdapter adaptador = new SqlDataAdapter(sql1, conexion);
+                            DataSet setDatos = new DataSet();
+                            adaptador.Fill(setDatos, "listado");
+                            tabledata = setDatos.Tables["listado"];
+                            conexion.Close();
+                            gvhistorial.DataSource = tabledata;
+                            gvhistorial.DataBind();
+                            llenarhistorial(familia, sitio);
+                            verhistorial();
+                        }
 
+                    }
                 }
+                else
+                {
+                    if (string.IsNullOrEmpty(familia) || string.IsNullOrWhiteSpace(familia))
+                    {
+                        mostrarhistorialM();
+                    }
+                    string sql3 = "SELECT COUNT(*) conteo FROM dbo.Member WHERE LastFamilyId='" + familia + "' AND RecordStatus=' ' AND Project='" + sitio + "' AND AffiliationStatus='AFIL'";
+
+                    int temp2 = ObtenerEntero(sql3, "conteo");
+                    if (temp2 <= 0)
+                    {
+                        veringreso();
+                        mst.mostrarMsjAdvNtf(dic.MsjFamilianoAfiliada);
+                        gvhistorial2.Visible = false;
+                    }
+                    else
+                    {
+                        string sql4 = "SELECT COUNT(*) conteo FROM Member M WHERE 0 = (SELECT COUNT(*) FROM MemberSponsorLetter MSL WHERE MSL.RecordStatus = M.RecordStatus AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId AND MSL.Category = '" + categoria + "'  AND YEAR(DateTimeWritten) = YEAR(GETDATE())) AND M.RecordStatus = ' ' AND M.Project = '" + sitio + "' AND M.LastFamilyId = '" + familia + "' AND M.AffiliationStatus = 'AFIL'";
+                        int apadsincarta = ObtenerEntero(sql4, "conteo");
+                        if (apadsincarta <= 0)
+                        {
+                            verhistorial();
+                            llenarhistorial(familia, sitio);
+                            btningresar.Visible = false;
+                            string sql1 = "SELECT M.Project AS Sitio, M.MemberId AS Miembro, M.FirstNames + ' ' + M.LastNames AS Nombre, dbo.fn_gen_npadrinos(M.Project,M.MemberId) Padrinos FROM Member M WHERE 0 = (SELECT COUNT(*) FROM MemberSponsorLetter MSL WHERE MSL.RecordStatus = M.RecordStatus AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId AND MSL.Category = '" + categoria + "'  AND YEAR(DateTimeWritten) = YEAR(GETDATE())) AND M.RecordStatus = ' ' AND M.Project = '" + sitio + "' AND M.LastFamilyId = '" + familia + "' AND M.AffiliationStatus = 'AFIL' AND  dbo.fn_gen_npadrinos(M.Project,M.MemberId)>0";
+                            DataTable tabledata;
+                            SqlConnection conexion = new SqlConnection(ConnectionString);
+                            conexion.Open();
+                            SqlDataAdapter adaptador = new SqlDataAdapter(sql1, conexion);
+                            DataSet setDatos = new DataSet();
+                            adaptador.Fill(setDatos, "listado");
+                            tabledata = setDatos.Tables["listado"];
+                            conexion.Close();
+                            gvhistorial.DataSource = tabledata;
+                            gvhistorial.DataBind();
+                        }
+                        else
+                        {
+                            string sql1 = "SELECT M.Project AS Sitio, M.MemberId AS Miembro, M.FirstNames + ' ' + M.LastNames AS Nombre, dbo.fn_gen_npadrinos(M.Project,M.MemberId) Padrinos FROM Member M WHERE 0 = (SELECT COUNT(*) FROM MemberSponsorLetter MSL WHERE MSL.RecordStatus = M.RecordStatus AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId AND MSL.Category = '" + categoria + "'  AND YEAR(DateTimeWritten) = YEAR(GETDATE())) AND M.RecordStatus = ' ' AND M.Project = '" + sitio + "' AND M.LastFamilyId = '" + familia + "' AND M.AffiliationStatus = 'AFIL' AND  dbo.fn_gen_npadrinos(M.Project,M.MemberId)>0";
+                            DataTable tabledata;
+                            SqlConnection conexion = new SqlConnection(ConnectionString);
+                            conexion.Open();
+                            SqlDataAdapter adaptador = new SqlDataAdapter(sql1, conexion);
+                            DataSet setDatos = new DataSet();
+                            adaptador.Fill(setDatos, "listado");
+                            tabledata = setDatos.Tables["listado"];
+                            conexion.Close();
+                            gvhistorial.DataSource = tabledata;
+                            gvhistorial.DataBind();
+                            llenarhistorial(familia, sitio);
+                            verhistorial();
+                        }
+
+                    }
+                }
+
+
             }
             catch (Exception ex)
             {
@@ -206,16 +266,12 @@ namespace Familias3._1.Apadrinamiento
             DataTable tableData = new DataTable();
             if (string.IsNullOrEmpty(txtapad.Text) || string.IsNullOrWhiteSpace(txtapad.Text))
             {
-                mostrarhistorialF();
+                mostrarhistorialF(0);
             }
-            int temp;
-            string numero = txtapad.Text;
             try
             {
-                sitio = ddlsitio.SelectedValue;
-                string sql3 = "SELECT COUNT(*) conteo FROM dbo.Member WHERE MemberId='" + numero + "' AND RecordStatus=' ' AND Project='" + sitio + "' AND AffiliationType='BECA' AND AffiliationStatus='AFIL' OR MemberId='" + numero + "' AND RecordStatus=' ' AND Project='" + S + "' AND AffiliationType='NORM' AND AffiliationStatus='AFIL' ";
+                string sql3 = "SELECT COUNT(*) conteo FROM dbo.Member WHERE MemberId='" + miembro + "' AND RecordStatus=' ' AND Project='" + sitio + "' AND AffiliationType='BECA' AND AffiliationStatus='AFIL' OR MemberId='" + miembro + "' AND RecordStatus=' ' AND Project='" + S + "' AND AffiliationType='NORM' AND AffiliationStatus='AFIL' ";
                 int temp2 = ObtenerEntero(sql3, "conteo");
-
                 if (temp2 <= 0)
                 {
                     veringreso();
@@ -224,21 +280,23 @@ namespace Familias3._1.Apadrinamiento
                 }
                 else
                 {
-                    string sql = "SELECT LastFamilyId Familia FROM dbo.Member WHERE MemberId='" + numero + "' AND RecordStatus=' ' AND Project='" + sitio + "'";
-                    temp3 = ObtenerEntero(sql, "Familia");
-                    string sql4 = "SELECT COUNT(*) conteo FROM Member M WHERE 0 = (SELECT COUNT(*) FROM MemberSponsorLetter MSL WHERE MSL.RecordStatus = M.RecordStatus AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId AND MSL.Category = '" + categoria + "'  AND YEAR(DateTimeWritten) = YEAR(GETDATE())) AND M.RecordStatus = ' ' AND M.Project = '" + sitio + "' AND M.LastFamilyId = '" + temp3 + "' AND M.AffiliationStatus = 'AFIL'";
+                    sql3 = "SELECT LastFamilyId Familia FROM dbo.Member WHERE RecordStatus=' ' AND MemberId='" + miembro + "' AND Project='" + sitio + "'";
+                    familia = Convert.ToString(ObtenerEntero(sql3, "Familia"));
+                    string sql4 = "SELECT COUNT(*) conteo FROM Member M WHERE 0 = (SELECT COUNT(*) FROM MemberSponsorLetter MSL WHERE MSL.RecordStatus = M.RecordStatus AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId AND MSL.Category = '" + categoria + "'  AND YEAR(DateTimeWritten) = YEAR(GETDATE())) AND M.RecordStatus = ' ' AND M.Project = '" + sitio + "' AND M.LastFamilyId = '" + familia + "' AND M.AffiliationStatus = 'AFIL'";
+                    
                     int apadsincarta = ObtenerEntero(sql4, "conteo");
                     if (apadsincarta <= 0)
                     {
                         verhistorial();
                         mst.mostrarMsjAdvNtf(dic.MsjYaingresoRegistro);
                         btningresar.Visible = false;
-                        llenarhistorial(temp3, sitio);
+                        llenarhistorial(familia, sitio);
 
                     }
                     else
                     {
-                        string sql1 = "SELECT M.Project AS Sitio, M.MemberId AS Miembro, M.FirstNames + ' ' + M.LastNames AS Nombre, dbo.fn_gen_npadrinos(M.Project,M.MemberId) Padrinos FROM Member M WHERE 0 = (SELECT COUNT(*) FROM MemberSponsorLetter MSL WHERE MSL.RecordStatus = M.RecordStatus AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId AND MSL.Category = '" + categoria + "'  AND YEAR(DateTimeWritten) = YEAR(GETDATE())) AND M.RecordStatus = ' ' AND M.Project = '" + sitio + "' AND M.LastFamilyId = '" + temp3 + "' AND M.AffiliationStatus = 'AFIL' AND  dbo.fn_gen_npadrinos(M.Project,M.MemberId)>0";
+                        string sql1 = "SELECT M.Project AS Sitio, M.MemberId AS Miembro, M.FirstNames + ' ' + M.LastNames AS Nombre, dbo.fn_gen_npadrinos(M.Project,M.MemberId) Padrinos FROM Member M WHERE 0 = (SELECT COUNT(*) FROM MemberSponsorLetter MSL WHERE MSL.RecordStatus = M.RecordStatus AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId AND MSL.Category = '" + categoria + "'  AND YEAR(DateTimeWritten) = YEAR(GETDATE())) AND M.RecordStatus = ' ' AND M.Project = '" + sitio + "' AND M.LastFamilyId = '" + familia + "' AND M.AffiliationStatus = 'AFIL' AND  dbo.fn_gen_npadrinos(M.Project,M.MemberId)>0";
+                        
                         DataTable tabledata;
                         SqlConnection conexion = new SqlConnection(ConnectionString);
                         conexion.Open();
@@ -249,7 +307,7 @@ namespace Familias3._1.Apadrinamiento
                         conexion.Close();
                         gvhistorial.DataSource = tabledata;
                         gvhistorial.DataBind();
-                        llenarhistorial(temp3, sitio);
+                        llenarhistorial(familia, sitio);
                         verhistorial();
                     }
                 }
@@ -316,8 +374,9 @@ namespace Familias3._1.Apadrinamiento
 
         protected void btnbuscar_Click(object sender, EventArgs e)
         {
-            string miembro = txtapad.Text;
-            string familia = txbfamilia.Text;
+            miembro = txtapad.Text.Replace(" ", "");
+            familia = txbfamilia.Text.Replace(" ", "");
+            sitio = ddlsitio.SelectedValue;
             if (string.IsNullOrEmpty(miembro) && string.IsNullOrEmpty(familia) || ddlsitio.SelectedIndex == 0)
             {
                 mst.mostrarMsjAdvNtf(dic.CampoVacioAPAD);
@@ -336,7 +395,7 @@ namespace Familias3._1.Apadrinamiento
                     }
                     if (string.IsNullOrEmpty(miembro) && !string.IsNullOrEmpty(familia))
                     {
-                        mostrarhistorialF();
+                        mostrarhistorialF(0);
                     }
                 }
 
@@ -398,7 +457,7 @@ namespace Familias3._1.Apadrinamiento
 
                     }
                 }
-                mostrarhistorialF();
+                mostrarhistorialF(1);
                 mst.mostrarMsjNtf(dic.RegistroIngresadoAPAD);
             }
         }
