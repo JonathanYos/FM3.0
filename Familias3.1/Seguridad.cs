@@ -201,6 +201,11 @@ namespace Familias3._1
             listFunciones.Add(new Funcion("ResumenBecas.aspx", (int)Selec.MiemFamAfilGradDesa, "EDUC", "RPEM"));
             listFunciones.Add(new Funcion("ResumenBecas.aspx", (int)Selec.MiemFamAfilGradDesa, "EDUC", "RREM"));
 
+            listFunciones.Add(new Funcion("HistorialEducati.aspx", (int)Selec.AfilApadGrad, "EDUC", "RHEM"));
+            listFunciones.Add(new Funcion("HistorialEducati.aspx", (int)Selec.AfilApadGrad, "EDUC", "RIAE"));
+            listFunciones.Add(new Funcion("HistorialEducati.aspx", (int)Selec.AfilApadGrad, "EDUC", "RPEM"));
+            listFunciones.Add(new Funcion("HistorialEducati.aspx", (int)Selec.AfilApadGrad, "EDUC", "RREM"));
+
         }
         protected void llenarPaginas()
         {
@@ -268,7 +273,7 @@ namespace Familias3._1
 
             //ADMINISTRACIÓN DE BECAS
             listPaginas.Add(new Pagina("ResumenBecas.aspx", "Resumen Becas", "Becas Information Sumary", (int)Selec.MiemFamAfilGradDesa, "EDUC", true));
-
+            listPaginas.Add(new Pagina("HistorialEducati.aspx", "Historial Educativo", "Educational History", (int)Selec.AfilApadGrad, "EDUC", true));
         }
         public int retornaSeguridadSeleccion(String page)
         {

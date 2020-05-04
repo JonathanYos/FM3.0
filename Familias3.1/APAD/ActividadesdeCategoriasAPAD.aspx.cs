@@ -49,7 +49,8 @@ namespace Familias3._1.Apadrinamiento
 
                         sql = "SELECT Project, MemberId, FirstNames + ' ' + LastNames Name,(SELECT COUNT(*) FROM MemberSolicitudeCard WHERE RecordStatus = ' ' AND PrintDate IS NOT NULL AND Project = M.Project AND MemberId = M.MemberId) 'Carnés' FROM Member M WHERE AffiliationStatus = 'AFIL' AND RecordStatus = ' ' AND Project = " + sitio + "";
                         llenargrid(sql);
-                    } break;
+                    }
+                    break;
                 case 2:
                     {
                         //cartas
@@ -59,18 +60,22 @@ namespace Familias3._1.Apadrinamiento
                             case 1:
                                 {
                                     llenargrid(sql.Replace(",(SELECT COUNT(*) FROM dbo.MemberSponsorLetter MSL WHERE MSL.RecordStatus = ' ' AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId  AND YEAR(DateTimeWritten) = " + DateTime.Now.Year + " AND Category = 'SEGU') AS '2aCarta'", ""));
-                                } break;
+                                }
+                                break;
                             case 2:
                                 {
                                     llenargrid(sql.Replace(",(SELECT COUNT(*) FROM dbo.MemberSponsorLetter MSL WHERE MSL.RecordStatus = ' ' AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId  AND YEAR(DateTimeWritten) = " + DateTime.Now.Year + " AND Category = 'PRIM') AS '1aCarta' ", ""));
-                                } break;
+                                }
+                                break;
                             default:
                                 {
                                     llenargrid(sql);
-                                } break;
+                                }
+                                break;
                         }
 
-                    } break;
+                    }
+                    break;
                 case 3:
                     {
                         //fotos
@@ -81,17 +86,21 @@ namespace Familias3._1.Apadrinamiento
                             case 1:
                                 {
                                     llenargrid(sql.Replace(",(SELECT DATEDIFF(m, PhotoDate, GETDATE()) FROM MiscMemberSponsorInfo WHERE RecordStatus = ' ' AND YEAR(PhotoDate) = " + DateTime.Now.Year + " AND  MemberId = M.MemberId AND Project = M.Project) AS 'mesesAntigüedad'", ""));
-                                } break;
+                                }
+                                break;
                             case 2:
                                 {
                                     llenargrid(sql.Replace(",(SELECT RetakePhotoDate FROM MiscMemberSponsorInfo WHERE RecordStatus = ' ' AND YEAR(PhotoDate) = " + DateTime.Now.Year + " AND  MemberId = M.MemberId AND Project = M.Project) AS 'retomarFoto'", ""));
-                                } break;
+                                }
+                                break;
                             default:
                                 {
                                     llenargrid(sql);
-                                } break;
+                                }
+                                break;
                         }
-                    } break;
+                    }
+                    break;
                 case 4:
                     {
                         //regalos
@@ -103,22 +112,27 @@ namespace Familias3._1.Apadrinamiento
                                 {
                                     sql = sql.Replace(",(SELECT COUNT(*) FROM dbo.MemberGift MG INNER JOIN  CdGiftCategory cdGC ON cdGC.Code = MG.Category WHERE MG.RecordStatus = ' ' AND YEAR(MG.SelectionDateTime) = " + DateTime.Now.Year + " AND cdGC.DescSpanish like 'Regalo de Cumpleaños' AND MG.MemberId = M.MemberId AND MG.Project = M.Project) AS 'Cumpleaños'", "");
                                     llenargrid(sql.Replace(", (SELECT COUNT(*) FROM dbo.MemberGift MG INNER JOIN  CdGiftCategory cdGC ON cdGC.Code = MG.Category WHERE MG.RecordStatus = ' ' AND YEAR(MG.SelectionDateTime) = " + DateTime.Now.Year + " AND cdGC.DescSpanish like 'Regalo de Padrinos' AND MG.MemberId = M.MemberId AND MG.Project = M.Project) AS 'de Padrino'", ""));
-                                } break;
+                                }
+                                break;
                             case 2:
                                 {
                                     llenargrid(sql.Replace(",(SELECT COUNT(*) FROM dbo.MemberGift MG INNER JOIN  CdGiftCategory cdGC ON cdGC.Code = MG.Category WHERE MG.RecordStatus = ' ' AND YEAR(MG.SelectionDateTime) = " + DateTime.Now.Year + " AND cdGC.DescSpanish like 'Segundo Regalo' AND MG.MemberId = M.MemberId AND MG.Project = M.Project) AS '2o. Regalo', (SELECT COUNT(*) FROM dbo.MemberGift MG INNER JOIN  CdGiftCategory cdGC ON cdGC.Code = MG.Category WHERE MG.RecordStatus = ' ' AND YEAR(MG.SelectionDateTime) = " + DateTime.Now.Year + " AND cdGC.DescSpanish like 'Regalo de Padrinos' AND MG.MemberId = M.MemberId AND MG.Project = M.Project) AS 'de Padrino'", ""));
-                                } break;
+                                }
+                                break;
                             case 3:
                                 {
                                     llenargrid(sql.Replace(",(SELECT COUNT(*) FROM dbo.MemberGift MG INNER JOIN  CdGiftCategory cdGC ON cdGC.Code = MG.Category WHERE MG.RecordStatus = ' ' AND YEAR(MG.SelectionDateTime) = " + DateTime.Now.Year + " AND cdGC.DescSpanish like 'Regalo de Cumpleaños' AND MG.MemberId = M.MemberId AND MG.Project = M.Project) AS 'Cumpleaños',(SELECT COUNT(*) FROM dbo.MemberGift MG INNER JOIN  CdGiftCategory cdGC ON cdGC.Code = MG.Category WHERE MG.RecordStatus = ' ' AND YEAR(MG.SelectionDateTime) = " + DateTime.Now.Year + " AND cdGC.DescSpanish like 'Segundo Regalo' AND MG.MemberId = M.MemberId AND MG.Project = M.Project) AS '2o. Regalo'", ""));
-                                } break;
+                                }
+                                break;
                             default:
                                 {
                                     llenargrid(sql);
-                                } break;
+                                }
+                                break;
                         }
 
-                    } break;
+                    }
+                    break;
                 case 5:
                     {
                         //Visita de Padrinos
@@ -147,33 +161,36 @@ namespace Familias3._1.Apadrinamiento
                         }
 
 
-                    } break;
+                    }
+                    break;
                 case 6:
                     {
                         //Viveres
-                        sql = "SELECT Project, FamilyId, Pueblo, dbo.fn_GEN_TS(F.Project, F.FamilyId) AS TS,(SELECT COUNT(*) FROM FamilyHelp FH INNER JOIN dbo.CdFamilyHelpReason cdFHR ON cdFHR.Code = FH.Reason WHERE RecordStatus = ' ' AND YEAR(DeliveryDateTime) = " + DateTime.Now.Year + " AND cdFHR.FunctionalArea = 'APAD' AND FamilyId = F.FamilyId AND Project = F.Project) 'de Apadrinamiento',(SELECT COUNT(*) FROM FamilyHelp FH INNER JOIN dbo.CdFamilyHelpReason cdFHR ON cdFHR.Code = FH.Reason WHERE RecordStatus = ' ' AND YEAR(DeliveryDateTime) = " + DateTime.Now.Year + " AND cdFHR.FunctionalArea = 'TS' AND FamilyId = F.FamilyId AND Project = F.Project) 'de TS' FROM Family F WHERE RecordStatus = ' ' AND AffiliationStatus = 'AFIL' AND Project = " + sitio + " ORDER BY Pueblo";
+                        sql = "SELECT Project Sitio, FamilyId Familia, Pueblo, dbo.fn_GEN_TS(F.Project, F.FamilyId) AS TS,(SELECT CASE WHEN SUM(Quantity) IS NULL THEN 0 ELSE SUM(Quantity) END Cantidad FROM dbo.FamilyHelp  WHERE RecordStatus = ' ' AND YEAR(CreationDateTime) = " + DateTime.Now.Year + "  AND FamilyId = F.FamilyId AND Project = F.Project ) Cantidad FROM Family F WHERE RecordStatus = ' ' AND AffiliationStatus = 'AFIL' AND Project = " + sitio + " ORDER BY Pueblo";
                         llenargrid(sql);
-                        switch (ddlcategoriacarta.SelectedIndex)
-                        {
-                            case 1:
-                                {
-                                    llenargrid(sql.Replace(",(SELECT COUNT(*) FROM FamilyHelp FH INNER JOIN dbo.CdFamilyHelpReason cdFHR ON cdFHR.Code = FH.Reason WHERE RecordStatus = ' ' AND YEAR(DeliveryDateTime) = " + DateTime.Now.Year + " AND cdFHR.FunctionalArea = 'TS' AND FamilyId = F.FamilyId AND Project = F.Project) 'de TS'", ""));
-                                } break;
-                            case 2:
-                                {
-                                    llenargrid(sql.Replace(",(SELECT COUNT(*) FROM FamilyHelp FH INNER JOIN dbo.CdFamilyHelpReason cdFHR ON cdFHR.Code = FH.Reason WHERE RecordStatus = ' ' AND YEAR(DeliveryDateTime) = " + DateTime.Now.Year + " AND cdFHR.FunctionalArea = 'APAD' AND FamilyId = F.FamilyId AND Project = F.Project) 'de Apadrinamiento'", ""));
-                                } break;
-                            default:
-                                {
-                                    llenargrid(sql);
-                                } break;
-                        }
+                        //switch (ddlcategoriacarta.SelectedIndex)
+                        //{
+                        //    case 1:
+                        //        {
+                        //            llenargrid(sql.Replace(",(SELECT COUNT(*) FROM FamilyHelp FH INNER JOIN dbo.CdFamilyHelpReason cdFHR ON cdFHR.Code = FH.Reason WHERE RecordStatus = ' ' AND YEAR(DeliveryDateTime) = " + DateTime.Now.Year + " AND cdFHR.FunctionalArea = 'TS' AND FamilyId = F.FamilyId AND Project = F.Project) 'de TS'", ""));
+                        //        } break;
+                        //    case 2:
+                        //        {
+                        //            llenargrid(sql.Replace(",(SELECT COUNT(*) FROM FamilyHelp FH INNER JOIN dbo.CdFamilyHelpReason cdFHR ON cdFHR.Code = FH.Reason WHERE RecordStatus = ' ' AND YEAR(DeliveryDateTime) = " + DateTime.Now.Year + " AND cdFHR.FunctionalArea = 'APAD' AND FamilyId = F.FamilyId AND Project = F.Project) 'de Apadrinamiento'", ""));
+                        //        } break;
+                        //    default:
+                        //        {
+                        //            llenargrid(sql);
+                        //        } break;
+                        //}
 
-                    } break;
+                    }
+                    break;
                 default:
                     {
 
-                    } break;
+                    }
+                    break;
             }
         }
         private void detectarcategoriaEn()
@@ -196,7 +213,8 @@ namespace Familias3._1.Apadrinamiento
                         //carnes
                         sql = "SELECT Project, MemberId, FirstNames + ' ' + LastNames Name,(SELECT COUNT(*) FROM MemberSolicitudeCard WHERE RecordStatus = ' ' AND PrintDate IS NOT NULL AND Project = M.Project AND MemberId = M.MemberId) 'Carnés' FROM Member M WHERE AffiliationStatus = 'AFIL' AND RecordStatus = ' ' AND Project = " + sitio + "";
                         llenargrid(sql);
-                    } break;
+                    }
+                    break;
                 case 4:
                     {
                         //cartas
@@ -207,17 +225,21 @@ namespace Familias3._1.Apadrinamiento
                             case 1:
                                 {
                                     llenargrid(sql.Replace(",(SELECT COUNT(*) FROM dbo.MemberSponsorLetter MSL WHERE MSL.RecordStatus = ' ' AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId  AND YEAR(DateTimeWritten) = " + DateTime.Now.Year + " AND Category = 'SEGU') AS '2aCarta'", ""));
-                                } break;
+                                }
+                                break;
                             case 2:
                                 {
                                     llenargrid(sql.Replace(",(SELECT COUNT(*) FROM dbo.MemberSponsorLetter MSL WHERE MSL.RecordStatus = ' ' AND MSL.Project = M.Project AND MSL.MemberId = M.MemberId  AND YEAR(DateTimeWritten) = " + DateTime.Now.Year + " AND Category = 'PRIM') AS '1aCarta' ", ""));
-                                } break;
+                                }
+                                break;
                             default:
                                 {
                                     llenargrid(sql);
-                                } break;
+                                }
+                                break;
                         }
-                    } break;
+                    }
+                    break;
                 case 5:
                     {
                         //fotos
@@ -227,17 +249,21 @@ namespace Familias3._1.Apadrinamiento
                             case 1:
                                 {
                                     llenargrid(sql.Replace(",(SELECT DATEDIFF(m, PhotoDate, GETDATE()) FROM MiscMemberSponsorInfo WHERE RecordStatus = ' ' AND YEAR(PhotoDate) = " + DateTime.Now.Year + " AND  MemberId = M.MemberId AND Project = M.Project) AS 'mesesAntigüedad'", ""));
-                                } break;
+                                }
+                                break;
                             case 2:
                                 {
                                     llenargrid(sql.Replace(",(SELECT RetakePhotoDate FROM MiscMemberSponsorInfo WHERE RecordStatus = ' ' AND YEAR(PhotoDate) = " + DateTime.Now.Year + " AND  MemberId = M.MemberId AND Project = M.Project) AS 'retomarFoto'", ""));
-                                } break;
+                                }
+                                break;
                             default:
                                 {
                                     llenargrid(sql);
-                                } break;
+                                }
+                                break;
                         }
-                    } break;
+                    }
+                    break;
                 case 2:
                     {
                         //regalos
@@ -248,21 +274,26 @@ namespace Familias3._1.Apadrinamiento
                                 {
                                     sql = sql.Replace(",(SELECT COUNT(*) FROM dbo.MemberGift MG INNER JOIN  CdGiftCategory cdGC ON cdGC.Code = MG.Category WHERE MG.RecordStatus = ' ' AND YEAR(MG.SelectionDateTime) = " + DateTime.Now.Year + " AND cdGC.DescSpanish like 'Regalo de Cumpleaños' AND MG.MemberId = M.MemberId AND MG.Project = M.Project) AS 'Cumpleaños'", "");
                                     llenargrid(sql.Replace(", (SELECT COUNT(*) FROM dbo.MemberGift MG INNER JOIN  CdGiftCategory cdGC ON cdGC.Code = MG.Category WHERE MG.RecordStatus = ' ' AND YEAR(MG.SelectionDateTime) = " + DateTime.Now.Year + " AND cdGC.DescSpanish like 'Regalo de Padrinos' AND MG.MemberId = M.MemberId AND MG.Project = M.Project) AS 'de Padrino'", ""));
-                                } break;
+                                }
+                                break;
                             case 2:
                                 {
                                     llenargrid(sql.Replace(",(SELECT COUNT(*) FROM dbo.MemberGift MG INNER JOIN  CdGiftCategory cdGC ON cdGC.Code = MG.Category WHERE MG.RecordStatus = ' ' AND YEAR(MG.SelectionDateTime) = " + DateTime.Now.Year + " AND cdGC.DescSpanish like 'Segundo Regalo' AND MG.MemberId = M.MemberId AND MG.Project = M.Project) AS '2o. Regalo', (SELECT COUNT(*) FROM dbo.MemberGift MG INNER JOIN  CdGiftCategory cdGC ON cdGC.Code = MG.Category WHERE MG.RecordStatus = ' ' AND YEAR(MG.SelectionDateTime) = " + DateTime.Now.Year + " AND cdGC.DescSpanish like 'Regalo de Padrinos' AND MG.MemberId = M.MemberId AND MG.Project = M.Project) AS 'de Padrino'", ""));
-                                } break;
+                                }
+                                break;
                             case 3:
                                 {
                                     llenargrid(sql.Replace(",(SELECT COUNT(*) FROM dbo.MemberGift MG INNER JOIN  CdGiftCategory cdGC ON cdGC.Code = MG.Category WHERE MG.RecordStatus = ' ' AND YEAR(MG.SelectionDateTime) = " + DateTime.Now.Year + " AND cdGC.DescSpanish like 'Regalo de Cumpleaños' AND MG.MemberId = M.MemberId AND MG.Project = M.Project) AS 'Cumpleaños',(SELECT COUNT(*) FROM dbo.MemberGift MG INNER JOIN  CdGiftCategory cdGC ON cdGC.Code = MG.Category WHERE MG.RecordStatus = ' ' AND YEAR(MG.SelectionDateTime) = " + DateTime.Now.Year + " AND cdGC.DescSpanish like 'Segundo Regalo' AND MG.MemberId = M.MemberId AND MG.Project = M.Project) AS '2o. Regalo'", ""));
-                                } break;
+                                }
+                                break;
                             default:
                                 {
                                     llenargrid(sql);
-                                } break;
+                                }
+                                break;
                         }
-                    } break;
+                    }
+                    break;
                 case 6:
                     {
                         //Visita de Padrinos
@@ -289,32 +320,37 @@ namespace Familias3._1.Apadrinamiento
                                 llenargrid(sql);
                             }
                         }
-                    } break;
+                    }
+                    break;
                 case 1:
                     {
                         //Viveres
-                        sql = "SELECT Project, FamilyId, Pueblo, dbo.fn_GEN_TS(F.Project, F.FamilyId) AS TS,(SELECT COUNT(*) FROM FamilyHelp FH INNER JOIN dbo.CdFamilyHelpReason cdFHR ON cdFHR.Code = FH.Reason WHERE RecordStatus = ' ' AND YEAR(DeliveryDateTime) = " + DateTime.Now.Year + " AND cdFHR.FunctionalArea = 'APAD' AND FamilyId = F.FamilyId AND Project = F.Project) 'de Apadrinamiento',(SELECT COUNT(*) FROM FamilyHelp FH INNER JOIN dbo.CdFamilyHelpReason cdFHR ON cdFHR.Code = FH.Reason WHERE RecordStatus = ' ' AND YEAR(DeliveryDateTime) = " + DateTime.Now.Year + " AND cdFHR.FunctionalArea = 'TS' AND FamilyId = F.FamilyId AND Project = F.Project) 'de TS' FROM Family F WHERE RecordStatus = ' ' AND AffiliationStatus = 'AFIL' AND Project = " + sitio + " ORDER BY Pueblo";
+                        sql = "SELECT Project, FamilyId, Pueblo, dbo.fn_GEN_TS(F.Project, F.FamilyId) AS TS,(SELECT CASE WHEN SUM(Quantity) IS NULL THEN 0 ELSE SUM(Quantity) END Cantidad FROM dbo.FamilyHelp  WHERE RecordStatus = ' ' AND YEAR(CreationDateTime) = " + DateTime.Now.Year + "  AND FamilyId = F.FamilyId AND Project = F.Project ) Quantity FROM Family F WHERE RecordStatus = ' ' AND AffiliationStatus = 'AFIL' AND Project = '" + sitio + "' ORDER BY Pueblo";
 
-                        switch (ddlcategoriacarta.SelectedIndex)
-                        {
-                            case 1:
-                                {
-                                    llenargrid(sql.Replace(",(SELECT COUNT(*) FROM FamilyHelp FH INNER JOIN dbo.CdFamilyHelpReason cdFHR ON cdFHR.Code = FH.Reason WHERE RecordStatus = ' ' AND YEAR(DeliveryDateTime) = " + DateTime.Now.Year + " AND cdFHR.FunctionalArea = 'APAD' AND FamilyId = F.FamilyId AND Project = F.Project) 'de Apadrinamiento'", ""));
-                                } break;
-                            case 2:
-                                {
-                                    llenargrid(sql.Replace(",(SELECT COUNT(*) FROM FamilyHelp FH INNER JOIN dbo.CdFamilyHelpReason cdFHR ON cdFHR.Code = FH.Reason WHERE RecordStatus = ' ' AND YEAR(DeliveryDateTime) = " + DateTime.Now.Year + " AND cdFHR.FunctionalArea = 'TS' AND FamilyId = F.FamilyId AND Project = F.Project) 'de TS'", ""));
-                                } break;
-                            default:
-                                {
-                                    llenargrid(sql);
-                                } break;
-                        }
-                    } break;
+                        llenargrid(sql);
+                        //switch (ddlcategoriacarta.SelectedIndex)
+                        //{
+                        //    case 1:
+                        //        {
+                        //            llenargrid(sql.Replace(",(SELECT COUNT(*) FROM FamilyHelp FH INNER JOIN dbo.CdFamilyHelpReason cdFHR ON cdFHR.Code = FH.Reason WHERE RecordStatus = ' ' AND YEAR(DeliveryDateTime) = " + DateTime.Now.Year + " AND cdFHR.FunctionalArea = 'APAD' AND FamilyId = F.FamilyId AND Project = F.Project) 'de Apadrinamiento'", ""));
+                        //        } break;
+                        //    case 2:
+                        //        {
+                        //            llenargrid(sql.Replace(",(SELECT COUNT(*) FROM FamilyHelp FH INNER JOIN dbo.CdFamilyHelpReason cdFHR ON cdFHR.Code = FH.Reason WHERE RecordStatus = ' ' AND YEAR(DeliveryDateTime) = " + DateTime.Now.Year + " AND cdFHR.FunctionalArea = 'TS' AND FamilyId = F.FamilyId AND Project = F.Project) 'de TS'", ""));
+                        //        } break;
+                        //    default:
+                        //        {
+                        //            llenargrid(sql);
+
+                        //        } break;
+                        //}
+                    }
+                    break;
                 default:
                     {
 
-                    } break;
+                    }
+                    break;
             }
         }
         private void eleccion()
@@ -332,7 +368,8 @@ namespace Familias3._1.Apadrinamiento
                         ddlcategoriacarta.Visible = true;
                         lblcategoriacarta.Visible = true;
 
-                    } break;
+                    }
+                    break;
                 case 2:
                     {
                         sql = "SELECT Code,CASE WHEN '" + L + "'='es' THEN DescSpanish ELSE DescEnglish END descripcion FROM dbo.CdLetterCategory WHERE Code='PRIM' OR Code='SEGU'";
@@ -342,7 +379,8 @@ namespace Familias3._1.Apadrinamiento
                         txbanio.Text = "";
                         ddlcategoriacarta.Visible = true;
                         lblcategoriacarta.Visible = true;
-                    } break;
+                    }
+                    break;
                 case 3:
                     {
                         ddlcategoriacarta.Enabled = true;
@@ -355,7 +393,8 @@ namespace Familias3._1.Apadrinamiento
                         txbanio.Text = "";
                         ddlcategoriacarta.Visible = true;
                         lblcategoriacarta.Visible = true;
-                    } break;
+                    }
+                    break;
                 case 4:
                     {
                         ddlcategoriacarta.Enabled = true;
@@ -369,7 +408,8 @@ namespace Familias3._1.Apadrinamiento
                         txbanio.Text = "";
                         ddlcategoriacarta.Visible = true;
                         lblcategoriacarta.Visible = true;
-                    } break;
+                    }
+                    break;
                 case 5:
                     {
                         ddlcategoriacarta.Enabled = false;
@@ -379,20 +419,22 @@ namespace Familias3._1.Apadrinamiento
                         txbanio.Text = "";
                         ddlcategoriacarta.Visible = false;
                         lblcategoriacarta.Visible = false;
-                    } break;
+                    }
+                    break;
                 case 6:
                     {
-                        ddlcategoriacarta.Enabled = true;
-                        ddlcategoriacarta.Items.Clear();
-                        ddlcategoriacarta.Items.Insert(0, new ListItem(String.Empty, String.Empty));
-                        ddlcategoriacarta.Items.Insert(1, new ListItem("Apadrinamiento", "C" + 1));
-                        ddlcategoriacarta.Items.Insert(2, new ListItem("Trabajo Social", "C" + 2));
-                        lblanio.Visible = false;
-                        txbanio.Visible = false;
-                        txbanio.Text = "";
-                        ddlcategoriacarta.Visible = true;
-                        lblcategoriacarta.Visible = true;
-                    } break;
+                        //ddlcategoriacarta.Enabled = true;
+                        //ddlcategoriacarta.Items.Clear();
+                        //ddlcategoriacarta.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                        //ddlcategoriacarta.Items.Insert(1, new ListItem("Apadrinamiento", "C" + 1));
+                        //ddlcategoriacarta.Items.Insert(2, new ListItem("Trabajo Social", "C" + 2));
+                        //lblanio.Visible = false;
+                        //txbanio.Visible = false;
+                        //txbanio.Text = "";
+                        //ddlcategoriacarta.Visible = true;
+                        //lblcategoriacarta.Visible = true;
+                    }
+                    break;
                 default:
                     {
                         ddlcategoriacarta.Enabled = false;
@@ -402,7 +444,8 @@ namespace Familias3._1.Apadrinamiento
                         txbanio.Text = "";
                         ddlcategoriacarta.Visible = true;
                         lblcategoriacarta.Visible = true;
-                    } break;
+                    }
+                    break;
             }
         }
         private void eleccionEn()
@@ -419,7 +462,8 @@ namespace Familias3._1.Apadrinamiento
                         txbanio.Text = "";
                         ddlcategoriacarta.Visible = false;
                         lblcategoriacarta.Visible = false;
-                    } break;
+                    }
+                    break;
                 case 4:
                     {
                         sql = "SELECT Code,CASE WHEN '" + L + "'='es' THEN DescSpanish ELSE DescEnglish END descripcion FROM dbo.CdLetterCategory WHERE Code='PRIM' OR Code='SEGU'";
@@ -429,7 +473,8 @@ namespace Familias3._1.Apadrinamiento
                         txbanio.Text = "";
                         ddlcategoriacarta.Visible = true;
                         lblcategoriacarta.Visible = true;
-                    } break;
+                    }
+                    break;
                 case 3:
                     {
                         ddlcategoriacarta.Enabled = false;
@@ -439,7 +484,8 @@ namespace Familias3._1.Apadrinamiento
                         txbanio.Text = "";
                         ddlcategoriacarta.Visible = true;
                         lblcategoriacarta.Visible = true;
-                    } break;
+                    }
+                    break;
                 case 2:
                     {
                         ddlcategoriacarta.Enabled = true;
@@ -453,7 +499,8 @@ namespace Familias3._1.Apadrinamiento
                         txbanio.Text = "";
                         ddlcategoriacarta.Visible = true;
                         lblcategoriacarta.Visible = true;
-                    } break;
+                    }
+                    break;
                 case 5:
                     {
                         ddlcategoriacarta.Enabled = true;
@@ -466,28 +513,31 @@ namespace Familias3._1.Apadrinamiento
                         txbanio.Text = "";
                         ddlcategoriacarta.Visible = true;
                         lblcategoriacarta.Visible = true;
-                    } break;
+                    }
+                    break;
                 case 1:
                     {
-                        ddlcategoriacarta.Enabled = true;
-                        ddlcategoriacarta.Items.Clear();
-                        ddlcategoriacarta.Items.Insert(0, new ListItem(String.Empty, String.Empty));
-                        ddlcategoriacarta.Items.Insert(1, new ListItem("Social Work", "C" + 1));
-                        ddlcategoriacarta.Items.Insert(2, new ListItem("SponsorShip", "C" + 2));
-                        lblanio.Visible = false;
-                        txbanio.Visible = false;
-                        txbanio.Text = "";
-                        ddlcategoriacarta.Visible = true;
-                        lblcategoriacarta.Visible = true;
+                        //ddlcategoriacarta.Enabled = true;
+                        //ddlcategoriacarta.Items.Clear();
+                        //ddlcategoriacarta.Items.Insert(0, new ListItem(String.Empty, String.Empty));
+                        //ddlcategoriacarta.Items.Insert(1, new ListItem("Social Work", "C" + 1));
+                        //ddlcategoriacarta.Items.Insert(2, new ListItem("SponsorShip", "C" + 2));
+                        //lblanio.Visible = false;
+                        //txbanio.Visible = false;
+                        //txbanio.Text = "";
+                        //ddlcategoriacarta.Visible = true;
+                        //lblcategoriacarta.Visible = true;
 
-                    } break;
+                    }
+                    break;
                 default:
                     {
                         ddlcategoriacarta.Enabled = false;
                         lblanio.Visible = false;
                         txbanio.Visible = false;
                         lblcategoriacarta.Visible = true;
-                    } break;
+                    }
+                    break;
             }
         }
         private void llenarcombo(string sql)
@@ -518,8 +568,8 @@ namespace Familias3._1.Apadrinamiento
             ddlsitio.SelectedIndex = 0;
 
             ddlcategoria.Items.Insert(0, new ListItem(String.Empty, String.Empty));
-            string[] categoria = { "Cartas", "Regalos", "Fotos", "Carnés", "Visita de Padrinos" };
-            string[] category = { "Gifts", "Letters", "Photos", "Identity Card", "Sponsor Visit" };
+            string[] categoria = { "Cartas", "Regalos", "Fotos", "Carnés", "Visita de Padrinos", "Víveres" };
+            string[] category = { "Gifts", "Letters", "Photos", "Identity Card", "Sponsor Visit", "Family Help" };
             Array.Sort(category);
             Array.Sort(categoria);
             if (L == "es")
@@ -606,9 +656,7 @@ namespace Familias3._1.Apadrinamiento
                 catch (Exception ex)
                 {
                 }
-
             }
-
         }
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
@@ -626,9 +674,7 @@ namespace Familias3._1.Apadrinamiento
                 {
                     detectarcategoriaEn();
                 }
-
             }
         }
-
     }
 }

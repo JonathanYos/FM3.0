@@ -211,6 +211,24 @@ namespace Familias3._1.Apadrinamiento {
         protected global::System.Web.UI.WebControls.GridView gvcarta;
         
         /// <summary>
+        /// Control LtbParaImprimir.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox LtbParaImprimir;
+        
+        /// <summary>
+        /// Control btnimpval.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnimpval;
+        
+        /// <summary>
         /// Control pnlimprimir.
         /// </summary>
         /// <remarks>

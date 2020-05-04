@@ -26,6 +26,8 @@ namespace Familias3._1.Apadrinamiento
         protected static String U;
         protected static String Site;
         protected static String Member;
+        protected static int accion;
+        protected static DataTable dtd = new DataTable();
         string ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
         SqlConnection con = new SqlConnection(System.Web.Configuration.WebConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString);
 
@@ -41,6 +43,7 @@ namespace Familias3._1.Apadrinamiento
             dic = new Diccionario(L, S);
             APD = new BDAPAD();
             BDM = new BDMiembro();
+
             if (!IsPostBack)
             {
                 BDM = new BDMiembro();
@@ -50,6 +53,8 @@ namespace Familias3._1.Apadrinamiento
                     Site = S;
                     Member = M;
                     valoresiniciales(Member, Site);
+                    pnlimprimir.Visible = true;
+                    LtbParaImprimir.Visible = false;
                 }
                 catch (Exception ex)
                 {
@@ -64,14 +69,60 @@ namespace Familias3._1.Apadrinamiento
 
             try
             {
-                ddlcat.Enabled = true;
-                txtnotas.Enabled = true;
+                if (accion == 1)
+                {
+                    string sql = @"SELECT UserId fecha FROM dbo.MemberSponsorLetter WHERE RecordStatus=' ' AND Project='" + Site + "' AND MemberId='" + Member + "' AND SponsorId='" + lblVidpadrino.Text + "' AND Category='" + ddlcat.SelectedValue + "' AND Notes='" + lblVnota.Text + "'";
+                    string usuario = APD.obtienePalabra(sql, "fecha");
+                    string ts = "SELECT FER.EmployeeId ts FROM Member M INNER JOIN Family F ON M.Project = F.Project AND M.LastFamilyId = F.FamilyId AND M.RecordStatus = F.RecordStatus AND M.RecordStatus = ' ' LEFT JOIN FamilyEmployeeRelation FER ON FER.Project = F.Project AND FER.FamilyId = F.FamilyId AND FER.RecordStatus = F.RecordStatus AND FER.EndDate IS NULL WHERE M.Project = '" + Site + "' AND M.MemberId = '" + Member + "'";
+                    string nombrets = APD.obtienePalabra(ts, "ts");
+                    string apadrinado = "SELECT FirstNames+' '+LastNames nombre  FROM dbo.Member WHERE RecordStatus=' ' AND Project='" + Site + "' AND MemberId='" + Member + "'";
+                    string nombreapad = APD.obtienePalabra(apadrinado, "nombre");
+                    string padrino3 = "SELECT (select case when SpeaksSpanish = 1 then 'Sí Habla Español' else 'No Habla Español' end) 'Español' FROM dbo.Sponsor WHERE RecordStatus=' ' AND SponsorId='" + lblVidpadrino.Text + "' ";
+                    string Espanol = APD.obtienePalabra(padrino3, "Español");
+                    string padrino2 = @"SELECT dbo.fn_GEN_FormatDate(DateTimeWritten,'" + L + "') escrita FROM dbo.MemberSponsorLetter WHERE RecordStatus=' ' AND Project='" + Site + "' AND MemberId='" + Member + "' AND Notes='" + lblVnota.Text + "' AND Category='" + ddlcat.SelectedValue + "' AND UserId='" + usuario + "' AND SponsorId='" + lblVidpadrino.Text + "'";
+                    string escrita = APD.obtienePalabra(padrino2, "escrita");
 
-                string padrino, cat, notas;
-                padrino = lblVidpadrino.Text;
-                cat = ddlcat.SelectedValue;
-                notas = txtnotas.Text;
-                eliminaregistro(padrino, cat);
+
+                    if (dtd.Columns.Count == 0)
+                    {
+                        dtd.Columns.Add("Sitio");
+                        dtd.Columns.Add("Miembro");
+                        dtd.Columns.Add("Padrino");
+                        dtd.Columns.Add("IdPadrino");
+                        dtd.Columns.Add("IdCategoria");
+                        dtd.Columns.Add("Notas");
+                    }
+                    DataRow dr = dtd.NewRow();
+                    dr[0] = Site;
+                    dr[1] = Member;
+                    dr[2] = lblVpadrino.Text.Replace("(" + lblVidpadrino.Text + ")", "");
+                    dr[3] = lblVidpadrino.Text;
+                    dr[4] = ddlcat.SelectedValue;
+                    dr[5] = txtnotas.Text;
+
+                    dtd.Rows.Add(dr);
+
+
+                    LtbParaImprimir.Items.Add("-------------------------------------------------------------------------------------------");
+                    LtbParaImprimir.Items.Add(dic.padrinos + ": " + lblVpadrino.Text.Replace("(" + lblVidpadrino.Text + ")", "") + "(" + Espanol + ")");
+                    LtbParaImprimir.Items.Add(dic.nombre + ": " + nombreapad + " (" + Site + Member + ") ");
+                    LtbParaImprimir.Items.Add(dic.tipo + ": " + ddlcat.SelectedItem.Text);
+                    LtbParaImprimir.Items.Add(dic.EscritaAPAD + ": " + escrita);
+                    LtbParaImprimir.Visible = true;
+                    btnimpval.Visible = true;
+                    limpiartodo();
+                }
+                if (accion == 2)
+                {
+                    ddlcat.Enabled = true;
+                    txtnotas.Enabled = true;
+                    string padrino, cat, notas;
+                    padrino = lblVidpadrino.Text;
+                    cat = ddlcat.SelectedValue;
+                    notas = txtnotas.Text;
+                    eliminaregistro(padrino, cat);
+                }
+
             }
             catch (Exception ex)
             {
@@ -196,7 +247,7 @@ namespace Familias3._1.Apadrinamiento
                 pnlimprimir.Controls.Add(new LiteralControl("<br />"));
                 pnlimprimir.Controls.Add(new LiteralControl(dic.nombrePadrino + ":  " + spnam + "  (" + Speaks + ")"));
                 pnlimprimir.Controls.Add(new LiteralControl("<br />"));
-                pnlimprimir.Controls.Add(new LiteralControl(dic.miembro + ":  " + Member + ""));
+                pnlimprimir.Controls.Add(new LiteralControl(dic.miembro + ":  " + Site + Member + ""));
                 pnlimprimir.Controls.Add(new LiteralControl("<br />"));
                 pnlimprimir.Controls.Add(new LiteralControl(dic.nombreMiembro + ":  " + membername + ""));
                 pnlimprimir.Controls.Add(new LiteralControl("<br />"));
@@ -347,9 +398,13 @@ namespace Familias3._1.Apadrinamiento
         }
         public void traducir()
         {
+            string imp;
+            if (L == "es") { imp = "Agregar para imprimir"; } else { imp = "Add to Print"; }
             txtmiembro.Attributes.Add("maxlength", "6");
+            btnimpval.Text = dic.ImprimirAPAD;
             lbltitcart.Text = dic.titIngCartAPAD + " (" + Member + ")";
             lblcat.Text = dic.categoriaAPAD;
+            btnimprimir.Text = imp;
             lblnotas.Text = dic.notasAPAD;
             btncaracep.Text = dic.AceptarAPAD;
             btncarcan.Text = dic.CancelarAPAD;
@@ -475,40 +530,17 @@ namespace Familias3._1.Apadrinamiento
         }
         protected void btneliminar_Click(object sender, EventArgs e)
         {
+            accion = 2;
             mst.mostrarMsjOpcionesMdl(dic.msjEliminarRegistro);
         }
         protected void btnimprimir_Click(object sender, EventArgs e)
         {
             try
             {
-                string sql = @"SELECT UserId fecha FROM dbo.MemberSponsorLetter WHERE RecordStatus=' ' AND Project='" + Site + "' AND MemberId='" + Member + "' AND SponsorId='" + lblVidpadrino.Text + "' AND Category='" + ddlcat.SelectedValue + "' AND Notes='" + lblVnota.Text + "'";
-                string usuario = APD.obtienePalabra(sql, "fecha");
-                string ts = "SELECT FER.EmployeeId ts FROM Member M INNER JOIN Family F ON M.Project = F.Project AND M.LastFamilyId = F.FamilyId AND M.RecordStatus = F.RecordStatus AND M.RecordStatus = ' ' LEFT JOIN FamilyEmployeeRelation FER ON FER.Project = F.Project AND FER.FamilyId = F.FamilyId AND FER.RecordStatus = F.RecordStatus AND FER.EndDate IS NULL WHERE M.Project = '" + Site + "' AND M.MemberId = '" + Member + "'";
-                string nombrets = APD.obtienePalabra(ts, "ts");
-                string apadrinado = "SELECT FirstNames+' '+LastNames nombre  FROM dbo.Member WHERE RecordStatus=' ' AND Project='" + Site + "' AND MemberId='" + Member + "'";
-                string nombreapad = APD.obtienePalabra(apadrinado, "nombre");
-                string padrino = "SELECT (select case when SpeaksSpanish = 1 then 'Sí Habla Español' else 'No Habla Español' end) 'Español' FROM dbo.Sponsor WHERE RecordStatus=' ' AND SponsorId='" + lblVidpadrino.Text + "' ";
-                string Espanol = APD.obtienePalabra(padrino, "Español");
-                con.Open();
-                string padrino2 = @"SELECT dbo.fn_GEN_FormatDate(DateTimeWritten,'" + L + "') escrita FROM dbo.MemberSponsorLetter WHERE RecordStatus=' ' AND Project='" + Site + "' AND MemberId='" + Member + "' AND Notes='" + lblVnota.Text + "' AND Category='" + ddlcat.SelectedValue + "' AND UserId='" + usuario + "' AND SponsorId='" + lblVidpadrino.Text + "'";
-                string escrita = APD.obtienePalabra(padrino2, "escrita");
-                pnlimprimir.Controls.Add(new LiteralControl("----------------------------------------------------------------------" + escrita));
-                pnlimprimir.Controls.Add(new LiteralControl("<br />"));
-                pnlimprimir.Controls.Add(new LiteralControl("No:  " + lblVidpadrino.Text));
-                pnlimprimir.Controls.Add(new LiteralControl("<br />"));
-                pnlimprimir.Controls.Add(new LiteralControl(dic.nombrePadrino + ":  " + lblVpadrino.Text.Replace("(" + lblVidpadrino.Text + ")", "") + "  (" + Espanol + ")"));
-                pnlimprimir.Controls.Add(new LiteralControl("<br />"));
-                pnlimprimir.Controls.Add(new LiteralControl(dic.miembro + ":  " + Member + ""));
-                pnlimprimir.Controls.Add(new LiteralControl("<br />"));
-                pnlimprimir.Controls.Add(new LiteralControl(dic.nombreMiembro + ":  " + nombreapad + ""));
-                pnlimprimir.Controls.Add(new LiteralControl("<br />"));
-                pnlimprimir.Controls.Add(new LiteralControl(dic.idFamilia + ":  " + F + ""));
-                pnlimprimir.Controls.Add(new LiteralControl("<br />"));
-                pnlimprimir.Controls.Add(new LiteralControl(dic.trabajadorS + ":  " + nombrets + ""));
-                pnlimprimir.Controls.Add(new LiteralControl("<br />"));
-                pnlimprimir.Controls.Add(new LiteralControl("<br />"));
-                limpiartodo();
-                Page.ClientScript.RegisterStartupScript(this.GetType(), "yourMessage", "CallPrint('divprint');", true);
+                accion = 1;
+                mst.mostrarMsjOpcionesMdl("¿Desea Agrergar a split?");
+
+
             }
             catch (Exception ex)
             {
@@ -520,6 +552,63 @@ namespace Familias3._1.Apadrinamiento
             string miembro = txtmiembro.Text;
             string sitio = ddlsitio.SelectedValue;
             VerificarApadrinamiento(miembro, sitio);
+        }
+
+        protected void btnimpval_Click(object sender, EventArgs e)
+        {
+            if (dtd.Rows.Count == 0)
+            {
+                mst.mostrarMsjAdvNtf("No se ha encontrado ningun split para imprimir");
+            }
+            else
+            {
+                foreach (DataRow dr in dtd.Rows)
+                {
+                    string sit = dr["Sitio"].ToString();
+                    string miem = dr["Miembro"].ToString();
+                    string pad = dr["Padrino"].ToString();
+                    string idpad = dr["IdPadrino"].ToString();
+                    string cate = dr["IdCategoria"].ToString();
+                    string not = dr["Notas"].ToString();
+
+                    
+
+                    string sql = @"SELECT UserId fecha FROM dbo.MemberSponsorLetter WHERE RecordStatus=' ' AND Project='" + sit + "' AND MemberId='" + miem + "' AND SponsorId='" + idpad + "' AND Category='" + cate + "' AND Notes='" + not + "'";
+                    string usuario = APD.obtienePalabra(sql, "fecha");
+
+                    string ts = "SELECT FER.EmployeeId ts FROM Member M INNER JOIN Family F ON M.Project = F.Project AND M.LastFamilyId = F.FamilyId AND M.RecordStatus = F.RecordStatus AND M.RecordStatus = ' ' LEFT JOIN FamilyEmployeeRelation FER ON FER.Project = F.Project AND FER.FamilyId = F.FamilyId AND FER.RecordStatus = F.RecordStatus AND FER.EndDate IS NULL WHERE M.Project = '" + sit + "' AND M.MemberId = '" + miem + "'";
+                    string nombrets = APD.obtienePalabra(ts, "ts");
+
+                    string apadrinado = "SELECT FirstNames+' '+LastNames nombre  FROM dbo.Member WHERE RecordStatus=' ' AND Project='" + sit + "' AND MemberId='" + miem + "'";
+                    string nombreapad = APD.obtienePalabra(apadrinado, "nombre");
+
+                    string padrino3 = "SELECT (select case when SpeaksSpanish = 1 then 'Sí Habla Español' else 'No Habla Español' end) 'Español' FROM dbo.Sponsor WHERE RecordStatus=' ' AND SponsorId='" + idpad + "' ";
+                    string Espanol = APD.obtienePalabra(padrino3, "Español");
+
+                    string padrino2 = @"SELECT dbo.fn_GEN_FormatDate(DateTimeWritten,'" + L + "') escrita FROM dbo.MemberSponsorLetter WHERE RecordStatus=' ' AND Project='" + sit + "' AND MemberId='" + miem + "' AND Notes='" + not + "' AND Category='" + cate + "' AND UserId='" + usuario + "' AND SponsorId='" + idpad + "'";
+                    string escrita = APD.obtienePalabra(padrino2, "escrita");
+
+
+                    pnlimprimir.Controls.Add(new LiteralControl("----------------------------------------------------------------------" + escrita));
+                    pnlimprimir.Controls.Add(new LiteralControl("<br />"));
+                    pnlimprimir.Controls.Add(new LiteralControl("No:  " + idpad));
+                    pnlimprimir.Controls.Add(new LiteralControl("<br />"));
+                    pnlimprimir.Controls.Add(new LiteralControl(dic.nombrePadrino + ":  " + pad + "  (" + Espanol + ")"));
+                    pnlimprimir.Controls.Add(new LiteralControl("<br />"));
+                    pnlimprimir.Controls.Add(new LiteralControl(dic.miembro + ": " + sit + miem + ""));
+                    pnlimprimir.Controls.Add(new LiteralControl("<br />"));
+                    pnlimprimir.Controls.Add(new LiteralControl(dic.nombreMiembro + ":  " + nombreapad + ""));
+                    pnlimprimir.Controls.Add(new LiteralControl("<br />"));
+                    pnlimprimir.Controls.Add(new LiteralControl(dic.trabajadorS + ":  " + nombrets + ""));
+                    pnlimprimir.Controls.Add(new LiteralControl("<br />"));
+                    pnlimprimir.Controls.Add(new LiteralControl("<br />"));
+                    pnlimprimir.Controls.Add(new LiteralControl("<br />"));
+                }
+                ClientScript.RegisterStartupScript(GetType(), "mostrar", "CallPrint('divprint');", true);
+
+
+            }
+
         }
     }
 }

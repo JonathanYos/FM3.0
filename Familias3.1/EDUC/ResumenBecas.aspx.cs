@@ -158,24 +158,44 @@ namespace Familias3._1.EDUC
         }
         protected void InformacionGen()
         {
-            txtnotasobs.Attributes.Add("maxlength", "300");
-            txtnotascal.Attributes.Add("maxlength", "120");
             DataTable listTable = new DataTable();
             DateTime actualD = DateTime.Now;
             lblVanio.Text = actualD.Year.ToString();
             sql = "SELECT * FROM dbo.fn_GEN_InfoGenMiembro('" + S + "', " + M + ", " + lblVanio.Text + ") L ";
             LlenarDataTable(sql, listTable);
-            sql = "SELECT Code FROM dbo.CdGrade WHERE ValidValue = 1 AND(DescSpanish = '" + listTable.Rows[0]["Grado"].ToString() + "' OR DescEnglish = '" + listTable.Rows[0]["Grado"].ToString() + "') ORDER BY Orden";
-            string codigogrado = obtienePalabra(sql, "Code");
-            sql = "SELECT Code FROM CdEducationStatus  WHERE ValidValue = 1 AND (DescSpanish='" + listTable.Rows[0]["Estado_Educ"].ToString() + "' OR DescEnglish='" + listTable.Rows[0]["Estado_Educ"].ToString() + "')";
-            string codigoestado = obtienePalabra(sql, "Code");
-            sql = "SELECT Code FROM CdEducationReasonNotToContinue  WHERE Active = 1 AND (DescSpanish = '" + listTable.Rows[0]["RazonNoContinuar"].ToString() + "' OR DescEnglish='" + listTable.Rows[0]["RazonNoContinuar"].ToString() + "') ";
-            string codigoexestado = obtienePalabra(sql, "Code");
+            if (string.IsNullOrEmpty(listTable.Rows[0]["Grado"].ToString()))
+            {
+                ddlgrado.SelectedIndex = 0;
+            }
+            else
+            {
+                sql = "SELECT Code FROM dbo.CdGrade WHERE ValidValue = 1 AND(DescSpanish = '" + listTable.Rows[0]["Grado"].ToString() + "' OR DescEnglish = '" + listTable.Rows[0]["Grado"].ToString() + "') ORDER BY Orden";
+                string codigogrado = obtienePalabra(sql, "Code");
+                ddlgrado.SelectedValue = codigogrado;
+            }
+
+            if (string.IsNullOrEmpty(listTable.Rows[0]["Estado_Educ"].ToString()))
+            {
+                ddlestado.SelectedIndex = 0;
+            }
+            else
+            {
+                sql = "SELECT Code FROM CdEducationStatus  WHERE ValidValue = 1 AND (DescSpanish='" + listTable.Rows[0]["Estado_Educ"].ToString() + "' OR DescEnglish='" + listTable.Rows[0]["Estado_Educ"].ToString() + "')";
+                string codigoestado = obtienePalabra(sql, "Code");
+                ddlestado.SelectedValue = codigoestado;
+            }
+            if (string.IsNullOrEmpty(listTable.Rows[0]["RazonNoContinuar"].ToString()))
+            {
+                ddlexestado.SelectedIndex = 0;
+            }
+            else
+            {
+                sql = "SELECT Code FROM CdEducationReasonNotToContinue  WHERE Active = 1 AND (DescSpanish = '" + listTable.Rows[0]["RazonNoContinuar"].ToString() + "' OR DescEnglish='" + listTable.Rows[0]["RazonNoContinuar"].ToString() + "') ";
+                string codigoexestado = obtienePalabra(sql, "Code");
+                ddlexestado.SelectedValue = codigoexestado;
+            }
             ddlcarrera.SelectedValue = listTable.Rows[0]["CarreraId"].ToString();
-            ddlgrado.SelectedValue = codigogrado;
             ddlescuela.SelectedValue = listTable.Rows[0]["EscuelaId"].ToString();
-            ddlestado.SelectedValue = codigoestado;
-            ddlexestado.SelectedValue = codigoexestado;
             CreationDateL.Text = listTable.Rows[0]["CreationDT"].ToString();
             if (string.IsNullOrEmpty(listTable.Rows[0]["Edad"].ToString())) { lblnombre.Text = lblnombre.Text; }
             else { lblnombre.Text = lblnombre.Text + " - " + listTable.Rows[0]["Edad"].ToString(); }
@@ -521,7 +541,6 @@ namespace Familias3._1.EDUC
                 string codigogrado = obtienePalabra(sql, "Code");
                 sql = "SELECT Code FROM CdEducationStatus  WHERE ValidValue = 1 AND (DescSpanish='" + listTable.Rows[0]["EstadoAfil"].ToString() + "' OR DescEnglish='" + listTable.Rows[0]["EstadoAfil"].ToString() + "')";
                 string codigoestado = obtienePalabra(sql, "Code");
-                Response.Write(sql);
                 sql = "INSERT INTO  dbo.MemberEducationYear SELECT Project, MemberId, SchoolYear, '" + ddlescuela.SelectedValue + "' SchoolCode, '" + ddlgrado.SelectedValue + "' Grade, '" + actual.ToString("MM/dd/yyyy HH:mm:ss TT") + "' CreationDateTime, RecordStatus,'" + U + "' UserId, ExpirationDateTime, ClassSection, PercentOfExpensesToPay, '" + ddlexestado.SelectedValue + "' ReasonNotToContinue, '" + ddlestado.SelectedValue + "' Status, '" + ddlcarrera.SelectedValue + "' Career, SingleTeacher, TransportationStartDate, TransportationEndDate, Notes, ExceptionPercent, '" + certificado + "' HasCertificate, NYSPackage, Typing FROM  dbo.MemberEducationYear WHERE RecordStatus = ' ' AND Project = '" + S + "' AND MemberId = " + M + " AND SchoolYear = " + lblVanio.Text + " AND Grade = '" + codigogrado + "' AND Status = '" + codigoestado + "' AND SchoolCode = '" + listTable.Rows[0]["EscuelaId"].ToString() + "'";
                 APD.ejecutarSQL(sql);
 

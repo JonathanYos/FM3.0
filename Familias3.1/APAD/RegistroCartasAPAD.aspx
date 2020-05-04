@@ -1,7 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/mast.Master" AutoEventWireup="true" CodeBehind="RegistroCartasAPAD.aspx.cs" Inherits="Familias3._1.Apadrinamiento.RegistroCartasAPAD" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="formContGlobal" style="margin-bottom:10px;">
+    <style>
+        .Paraimp {
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+    <div class="formContGlobal" style="margin-bottom: 10px;">
         <table class="contcart">
             <tr>
                 <td style="width: 100%;">
@@ -76,7 +82,6 @@
                                 </td>
                             </tr>
                             <tr>
-
                                 <td colspan="2">
                                     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" GridLines="None">
                                         <Columns>
@@ -109,30 +114,32 @@
                                 </td>
                             </tr>
                         </table>
-
                         <asp:GridView ID="gvcarta" CssClass="tableCont gray" runat="server" OnSelectedIndexChanged="gvcara_SelectedIndexChanged">
                             <Columns>
-
                                 <asp:CommandField HeaderText="Action/Accion" SelectText="Select/Seleccionar" ShowSelectButton="True" />
-
                             </Columns>
                         </asp:GridView>
                     </div>
                 </td>
+
             </tr>
-
+            <tr>
+                <td>
+                    <asp:ListBox ID="LtbParaImprimir" CssClass="Paraimp" runat="server"></asp:ListBox>
+                    <asp:Button ID="btnimpval" runat="server" Text="" CssClass="butonForm" Visible="false" OnClick="btnimpval_Click" />
+                </td>
+            </tr>
         </table>
+        <div id="divprint" style="visibility:hidden;">
+            <asp:Panel ID="pnlimprimir" runat="server"></asp:Panel>
 
-        <div id="divprint" style="visibility: hidden;">
-            <asp:Panel ID="pnlimprimir" runat="server">
-            </asp:Panel>
         </div>
     </div>
     <script>
         function CallPrint(strid) {
             var prtContent = document.getElementById(strid);
             var WinPrint =
-           window.open('', '', 'letf=0,top=0,width=10,height=10,toolbar=0,scrollbars=0,sta¬tus=0');
+           window.open('', '', 'letf=0,top=0,width=200,height=200,toolbar=0,scrollbars=0,sta¬tus=0');
             WinPrint.document.write(prtContent.innerHTML);
             WinPrint.document.close();
             WinPrint.focus();
