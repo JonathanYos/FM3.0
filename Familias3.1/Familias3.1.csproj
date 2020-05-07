@@ -230,6 +230,7 @@
     <Content Include="css\EstilosAPAD.css" />
     <Content Include="css\EstiloTabla.css" />
     <Content Include="css\EstiloTabs.css" />
+    <Content Include="EDUC\HistorialActividades.aspx" />
     <Content Include="EDUC\HistorialEducati.aspx" />
     <Content Include="EDUC\RegistroActividadesInd.aspx" />
     <Content Include="EDUC\ResumenBecas.aspx" />
@@ -486,6 +487,13 @@
       <DependentUpon>Seguimiento.aspx</DependentUpon>
     </Compile>
     <Compile Include="bd\BDPROE.cs" />
+    <Compile Include="EDUC\HistorialActividades.aspx.cs">
+      <DependentUpon>HistorialActividades.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EDUC\HistorialActividades.aspx.designer.cs">
+      <DependentUpon>HistorialActividades.aspx</DependentUpon>
+    </Compile>
     <Compile Include="EDUC\HistorialEducati.aspx.cs">
       <DependentUpon>HistorialEducati.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -148,6 +148,7 @@ namespace Familias3._1.EDUC
         }
         protected void ValoresIniciales()
         {
+            txtobservaciones.Attributes.Add("maxlength", "120");
             sql = "SELECT Code, DescSpanish FROM dbo.CdMemberActivityType WHERE Active = 1 AND Project IN ('*', '" + S + "')  AND FunctionalArea = 'EDUC' ORDER BY DescSpanish ";
             llenarcombo(sql, ddltipo, "Code", "DescSpanish");
             lblfaro.Visible = false;
