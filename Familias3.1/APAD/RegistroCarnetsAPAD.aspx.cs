@@ -48,6 +48,7 @@ namespace Familias3._1.Apadrinamiento
                 }
                 catch (Exception ex)
                 {
+                    mst.mostrarMsjAdvNtf(ex.Message);
                 }
             }
 

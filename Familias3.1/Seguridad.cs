@@ -217,6 +217,9 @@ namespace Familias3._1
 
             listFunciones.Add(new Funcion("ActividadesDuplicadas.aspx", (int)Selec.Ninguno, "EDUC", "RPEM"));
             listFunciones.Add(new Funcion("ActividadesDuplicadas.aspx", (int)Selec.Ninguno, "EDUC", "RREM"));
+
+            listFunciones.Add(new Funcion("ReporteAnualActividades.aspx", (int)Selec.Ninguno, "EDUC", "RPEM"));
+            listFunciones.Add(new Funcion("ReporteAnualActividades.aspx", (int)Selec.Ninguno, "EDUC", "RREM"));
         }
         protected void llenarPaginas()
         {
@@ -289,7 +292,8 @@ namespace Familias3._1
             listPaginas.Add(new Pagina("HistorialActividades.aspx", "Historial de Actividades", "Activity History", (int)Selec.Apad, "EDUC", true));
             listPaginas.Add(new Pagina("CargaActividadesExcel.aspx", "Carga de Actividades Excel", "-", (int)Selec.Apad, "EDUC", true));
             listPaginas.Add(new Pagina("ActividadesDuplicadas.aspx", "Actividades Duplicadas", "-", (int)Selec.Apad, "EDUC", true));
-            
+            listPaginas.Add(new Pagina("ReporteAnualActividades.aspx", "Reporte Anual de Actividades", "-", (int)Selec.Apad, "EDUC", true));
+
         }
         public int retornaSeguridadSeleccion(String page)
         {

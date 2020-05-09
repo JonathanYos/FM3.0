@@ -39,11 +39,11 @@
             <td>
                 <asp:Label ID="lblcat" runat="server" Text=""></asp:Label></td>
             <td>
-                <asp:DropDownList ID="ddlcat" runat="server" CssClass="combobox2 comboBoxForm"></asp:DropDownList></td>
+                <asp:DropDownList ID="ddlcat" runat="server" CssClass="combobox2 widthall comboBoxForm"></asp:DropDownList></td>
             <td>
                 <asp:Label ID="lbltipo" runat="server" Text=""></asp:Label></td>
             <td>
-                <asp:DropDownList ID="ddltipo" runat="server" CssClass="combobox2 comboBoxForm"></asp:DropDownList></td>
+                <asp:DropDownList ID="ddltipo" runat="server" CssClass="combobox2 widthall comboBoxForm"></asp:DropDownList></td>
         </tr>
         <tr>
             <td colspan="4">

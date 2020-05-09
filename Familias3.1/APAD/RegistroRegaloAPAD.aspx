@@ -32,7 +32,7 @@
             </td>
         </tr>
     </table>
-    <div class="contenedor">
+    <div class="contenedor" style="display:flex; justify-content:center;">
         <table class="tableCont hijo dttamano pink" runat="server" id="tbregistro">
             <tr>
                 <th>
@@ -91,12 +91,5 @@
     </div>
     </div>
     <script>
-        $(document).ready(function () {
-            var tamanoregistro = $('.dttamano').width();
-            var tamanohistorial = $('#ContentPlaceHolder1_gvhistorial').width();
-            var tamanototal = tamanohistorial + 70 + tamanoregistro;
-            $('.contenedor').css('width', tamanototal + 'px');
-
-        });
     </script>
 </asp:Content>

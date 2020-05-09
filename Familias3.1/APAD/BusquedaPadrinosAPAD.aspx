@@ -13,13 +13,13 @@
                 <th>
                     <asp:Label ID="lblestado" runat="server" Text=""></asp:Label></th>
                 <td>
-                    <asp:DropDownList ID="ddlestado" runat="server" CssClass="largo comboBoxBlueForm"></asp:DropDownList></td>
+                    <asp:DropDownList ID="ddlestado" runat="server" CssClass="widthall comboBoxBlueForm"></asp:DropDownList></td>
             </tr>
             <tr>
                 <th>
                     <asp:Label ID="lblpais" runat="server" Text=""></asp:Label></th>
                 <td>
-                    <asp:DropDownList ID="ddlpais" runat="server" CssClass="largo comboBoxBlueForm"></asp:DropDownList></td>
+                    <asp:DropDownList ID="ddlpais" runat="server" CssClass=" widthall comboBoxBlueForm"></asp:DropDownList></td>
             </tr>
             <tr>
                 <th>

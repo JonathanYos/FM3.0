@@ -7,6 +7,9 @@
             div.ajax__calendar_container {
                 width: 185px;
             }
+            .heigthall{
+                height:100%;
+            }
         </style>
         <table class="tableCont cntrar2" id="ingreso" runat="server">
             <tr>
@@ -17,7 +20,7 @@
                     <asp:RequiredFieldValidator ID="revtxtfecha" runat="server" ControlToValidate="txtdefecha" ValidationGroup="grpGuardar" Display="None"></asp:RequiredFieldValidator>
                     <ajaxToolkit:ValidatorCalloutExtender ID="revtxtfecha_ValidatorCalloutExtender" runat="server" BehaviorID="revtxtfecha_ValidatorCalloutExtender" TargetControlID="revtxtfecha">
                     </ajaxToolkit:ValidatorCalloutExtender>
-                    <asp:TextBox ID="txtdefecha" runat="server" contentEditable="false"></asp:TextBox>
+                    <asp:TextBox ID="txtdefecha" runat="server" CssClass="heigthall" contentEditable="false"></asp:TextBox>
                     <ajaxToolkit:CalendarExtender ID="txtdefecha_CalendarExtender" runat="server" Format="yyyy-MM-dd" BehaviorID="txtdefecha_CalendarExtender" TargetControlID="txtdefecha" />
                 </td>
 
@@ -25,18 +28,18 @@
                     <i style="color: red; font-size: 14px; font-weight: bold;">*</i><asp:Label ID="lblafecha" runat="server" Text=""></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="txbafecha" runat="server" contentEditable="false"></asp:TextBox>
+                    <asp:TextBox ID="txbafecha" runat="server" CssClass="heigthall" contentEditable="false"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="rfvafecha" runat="server" ControlToValidate="txbafecha" ValidationGroup="grpGuardar" Display="None"></asp:RequiredFieldValidator>
                     <ajaxToolkit:ValidatorCalloutExtender ID="vceafecha" runat="server" BehaviorID="rfvafecha_ValidatorCalloutExtender" TargetControlID="rfvafecha">
                     </ajaxToolkit:ValidatorCalloutExtender>
-                    <ajaxToolkit:CalendarExtender ID="txtafecha_CalendarExtender" runat="server" BehaviorID="txtafecha_CalendarExtender" Format="yyyy-MM-dd" TargetControlID="txbafecha" />
+                    <ajaxToolkit:CalendarExtender ID="txtafecha_CalendarExtender" runat="server" BehaviorID="txtaffdecha_CalendarExtender" Format="yyyy-MM-dd" TargetControlID="txbafecha" />
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <asp:Label ID="lblCategoria" runat="server" Text=""></asp:Label></td>
                 <td colspan="2">
-                    <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="comboBoxForm combobox2"></asp:DropDownList></td>
+                    <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="comboBoxForm widthall combobox2"></asp:DropDownList></td>
             </tr>
             <tr>
                 <td colspan="4">

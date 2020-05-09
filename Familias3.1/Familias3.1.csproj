@@ -236,6 +236,7 @@
     <Content Include="EDUC\HistorialEducati.aspx" />
     <Content Include="EDUC\RegistroActividadesInd.aspx" />
     <Content Include="EDUC\ReporteAnualActividades.aspx" />
+    <Content Include="EDUC\ReporteGeneralActi.aspx" />
     <Content Include="EDUC\ResumenBecas.aspx" />
     <Content Include="Images\FamiliasFondo2Aux.jpg" />
     <Content Include="Images\FamiliasFondo2.jpg" />
@@ -531,6 +532,13 @@
     </Compile>
     <Compile Include="EDUC\ReporteAnualActividades.aspx.designer.cs">
       <DependentUpon>ReporteAnualActividades.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EDUC\ReporteGeneralActi.aspx.cs">
+      <DependentUpon>ReporteGeneralActi.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EDUC\ReporteGeneralActi.aspx.designer.cs">
+      <DependentUpon>ReporteGeneralActi.aspx</DependentUpon>
     </Compile>
     <Compile Include="EDUC\ResumenBecas.aspx.cs">
       <DependentUpon>ResumenBecas.aspx</DependentUpon>

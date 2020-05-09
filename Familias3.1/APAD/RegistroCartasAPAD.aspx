@@ -41,7 +41,7 @@
                 <td>
                     <br />
 
-                    <div class="cartcont">
+                    <div class="cartcont" style="display:flex; justify-content:center;">
 
                         <table class="tableCont cart orange">
                             <tr>
@@ -147,12 +147,5 @@
             WinPrint.close();
             // prtContent.innerHTML = strOldOne;
         }
-        $(document).ready(function () {
-            var ancho1 = $(".cart").width();
-            var ancho2 = $("#ContentPlaceHolder1_gvcarta").width();
-            var total = ancho1 + 50 + ancho2;
-            $(".cartcont").width(total);
-            $(".cartcont").css("margin", "0 auto");
-        });
     </script>
 </asp:Content>
