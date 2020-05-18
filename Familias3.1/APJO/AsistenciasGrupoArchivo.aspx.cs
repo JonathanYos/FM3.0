@@ -30,6 +30,7 @@ namespace Familias3._1.APJO
             if (!IsPostBack)
             {
                 dtAsistenciasAux = new DataTable();
+                dtAsistencias = new DataTable();
                 mst = (mast)Master;
                 bdAPJO = new BDPROE();
                 S = mast.S;
@@ -187,7 +188,6 @@ namespace Familias3._1.APJO
                 mst.mostrarMsj(dic.msjNoSeRealizoExcp + ex.Message.ToString());
             }
         }
-
         protected void gdvAsistencias_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -201,7 +201,6 @@ namespace Familias3._1.APJO
                 e.Row.Cells[9].BackColor = usuario.Equals("N") || actividad.Equals("N") || miembro.Equals("N") ? Color.Thistle : Color.White;
             }
         }
-
         protected void btnNuevaCarga_Click(object sender, EventArgs e)
         {
             btnGuardar.Visible = false;

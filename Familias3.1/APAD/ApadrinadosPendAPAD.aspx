@@ -103,14 +103,4 @@
             </td>
         </tr>
     </table>
-    <script>
-        $(document).ready(function () {
-            var alto = $('#pnlMenu').height();
-            var ancho = $('#ContentPlaceHolder1_gvhistorial').width();
-            $('#mdf').css('width', ancho+10 + 'px');
-           // $('#mdf').css('height', (alto - 100) + 'px');
-            $('#mdf').css('margin', '0 auto');
-            $('#mdf').css('overflow-y', 'auto');
-        });
-    </script>
 </asp:Content>

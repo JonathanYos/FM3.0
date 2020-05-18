@@ -132,7 +132,7 @@ namespace Familias3._1.Apadrinamiento
             lblnumero.Text = dic.NumeroPadrino;
             btnbuscar.Text = dic.buscar;
 
-            string sql = "SELECT Code, CASE WHEN '" + L + "'='es' THEN DescSpanish ELSE DescEnglish END descripcion FROM dbo.CdStateOrProvince";
+            string sql = "SELECT Code, CASE WHEN '" + L + "'='es' THEN DescSpanish ELSE DescEnglish END descripcion FROM dbo.CdStateOrProvince ORDER BY CASE WHEN '" + L + "'='es' THEN DescSpanish ELSE DescEnglish END  ASC";
             SqlDataAdapter adapter = new SqlDataAdapter(sql, ConnectionString);
             DataTable datos = new DataTable();
             adapter.Fill(datos);
@@ -142,7 +142,7 @@ namespace Familias3._1.Apadrinamiento
             ddlestado.DataBind();
             ddlestado.Items.Insert(0, new ListItem(String.Empty, String.Empty));
             ddlestado.SelectedIndex = 0;
-            string sql2 = " SELECT Code, CASE WHEN '" + L + "'='es' THEN DescSpanish ELSE DescEnglish END descripcion FROM dbo.CdCountry ";
+            string sql2 = " SELECT Code, CASE WHEN '" + L + "'='es' THEN DescSpanish ELSE DescEnglish END descripcion FROM dbo.CdCountry ORDER BY CASE WHEN '" + L + "'='es' THEN DescSpanish ELSE DescEnglish END ASC ";
             SqlDataAdapter adapter2 = new SqlDataAdapter(sql2, ConnectionString);
             DataTable datos2 = new DataTable();
             adapter2.Fill(datos2);
