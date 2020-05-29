@@ -34,14 +34,14 @@
                     <asp:Label ID="lblvalornotas" runat="server" Text=""></asp:Label>
                     <asp:Label ID="lblVnombre" runat="server" Text="" CssClass="block"></asp:Label>
                     <asp:Label ID="lblnotas" runat="server" Text=""></asp:Label><asp:TextBox ID="txtmnotas" runat="server" CssClass="textBoxForm inline" MaxLength="40"></asp:TextBox>
-                    <asp:GridView ID="gvapadrinado" runat="server" AutoGenerateColumns="false" CssClass="tableCont pink">
+                    <asp:GridView ID="gvapadrinado" runat="server" AutoGenerateColumns="false" CssClass="tableCont pink" OnRowDataBound="gvapadrinado_RowDataBound">
                         <Columns>
                             <asp:TemplateField HeaderText="Agregar/Add">
                                 <ItemTemplate>
                                     <asp:CheckBox ID="cbagregar" runat="server" Checked="true" />
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Agregar/Add" Visible="false">
+                            <asp:TemplateField HeaderText="Agregar/Add" Visible="true">
                                 <ItemTemplate>
                                     <asp:CheckBox ID="cbagregarv" runat="server" Checked="true" />
                                 </ItemTemplate>
@@ -52,6 +52,11 @@
                             <asp:TemplateField HeaderText="Notas/Notes">
                                 <ItemTemplate>
                                     <asp:TextBox ID="txtnvisita" runat="server" CssClass="textBoxForm"></asp:TextBox>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Notas/Notes">
+                                <ItemTemplate>
+                                    <asp:TextBox ID="txtnviveres" runat="server" CssClass="textBoxForm"></asp:TextBox>
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>

@@ -102,7 +102,7 @@ namespace Familias3._1.Apadrinamiento
         }
         private void GuardarRegitro()
         {
-            string miembro, notas;
+            string miembro, notas, notasv;
             APD = new BDAPAD();
             foreach (GridViewRow gvrow in gvapadrinado.Rows)
             {
@@ -110,18 +110,22 @@ namespace Familias3._1.Apadrinamiento
                 CheckBox chk = (CheckBox)gvrow.FindControl("cbagregar");
                 if (chk.Checked)
                 {
-                    // CheckBox chv = (CheckBox)gvrow.FindControl("cbagregarv");
-                    // if(chv.Checked){
-                    //string familia = "SELECT LastFamilyId FROM dbo.Member WHERE RecordStatus=' ' AND MemberId='"+miembro+"' AND Project='"+S+"'";
-                    //int idfamilia = APD.ObtenerEntero(familia, "LastFamilyId");
-                    //string sql2 = "INSERT dbo.FamilyHelp VALUES('" + S + "', '" + idfamilia + "', 'razon', GETDATE(), GETDATE(), ' ', '" + U + "', NULL, '','1')";
-                    //Response.Write(sql2 + "<br/>");
-                    // }
-                    TextBox txt = (TextBox)gvrow.FindControl("txtnvisita");
-                    notas = txt.Text;
+                    CheckBox chv = (CheckBox)gvrow.FindControl("cbagregarv");
+                    TextBox txt2 = (TextBox)gvrow.FindControl("txtnviveres");
                     string sitio;
                     sitio = gvrow.Cells[3].Text;
                     string sitio2 = APD.obtienePalabra("SELECT Code FROM dbo.FwCdOrganization WHERE DescSpanish='" + miembro + "' OR DescEnglish='" + miembro + "'", "Code");
+                    if (chv.Checked)
+                    {
+                        string familia = "SELECT LastFamilyId FROM dbo.Member WHERE RecordStatus=' ' AND MemberId='" + sitio + "' AND Project='" + sitio2 + "'";
+                        int idfamilia = APD.ObtenerEntero(familia, "LastFamilyId");
+                        string sql2 = "INSERT dbo.FamilyHelp VALUES('" + sitio2 + "', '" + idfamilia + "', 'VIPA', GETDATE(), GETDATE(), ' ', '" + U + "', NULL,NULL, '"+txt2.Text+ "',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)";
+                        APD.ejecutarSQL(sql2);
+                    }
+                    TextBox txt = (TextBox)gvrow.FindControl("txtnvisita");
+                    notas = txt.Text;
+                    
+                   
                     try
                     {
                         string sql = "INSERT dbo.SponsorMemberVisit VALUES('" + sitio2 + "','" + P + "','" + sitio + "','" + txtfechav.Text + "',GETDATE(),' ','" + U + "',NULL,'" + txt.Text + "')";
@@ -382,6 +386,25 @@ namespace Familias3._1.Apadrinamiento
         protected void btnnuevab_Click(object sender, EventArgs e)
         {
             Response.Redirect("BusquedaPadrinosAPAD.aspx");
+        }
+
+        protected void gvapadrinado_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            string addvisita, addviveres,notasvisita,nviveres;
+            addvisita = L == "es" ?"Agregar Visita":"Add Visit";
+            addviveres = L == "es" ? "Agregar Viveres" : "Add Family Help";
+            notasvisita = L == "es" ? "Notas de Visita" : "Visit Notes";
+            nviveres = L == "es" ? "Notas de Viveres" : "Family Help Notes";
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                e.Row.Cells[0].Text = addvisita;
+                e.Row.Cells[1].Text = addviveres;
+                e.Row.Cells[2].Text = dic.sitio;
+                e.Row.Cells[3].Text = dic.miembro;
+                e.Row.Cells[4].Text = dic.nombre;
+                e.Row.Cells[5].Text = notasvisita;
+                e.Row.Cells[6].Text = nviveres;
+            }
         }
     }
 }
